@@ -43,8 +43,47 @@ class LinkedList{
 // =======================================================
 
 int main(){
-    LinkedList CoorList;
-    cout << "HELLLP";
+    LinkedList coorList;
+
+    int command, x, y;
+    while(true){
+        cin >> command;
+
+        switch(command){
+            case 1: 
+                cin >> x >> y;
+                coorList.AddFirst(x,y);
+                break;
+
+            case 2:
+                coorList.DelFirst();
+                break;
+
+            case 3:
+                cin >> x >> y;
+                coorList.Del(x,y);
+                break;
+
+            case 4:
+                cin >> x;
+                coorList.Search(x);
+                break;
+
+            case 5:
+                cin >> x >> y;
+                if(coorList.Search(x,y)) cout << "True" << endl;
+                else cout << "False" << endl;
+                break;
+
+            case 6:
+                cout << coorList.Length() << endl;
+                break;
+
+            default: 
+                cout << "Exiting" << endl;
+        }
+    }
+    
     return 0; 
 }
 
@@ -111,8 +150,7 @@ void LinkedList::Search(long d){
         
         current = current->next;
     }
-
-    
+    cout << endl;
 }
 
 // This function returns true if {x,y} is present in linked list
