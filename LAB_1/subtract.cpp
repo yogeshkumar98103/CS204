@@ -3,8 +3,6 @@
 using namespace std;
 
 typedef vector<char>::size_type SizeType;
-#define deb(x) cout << #x << " : " << x << endl; 
-#define print(x) for(SizeType i = 0; i < x.size(); i++) cout << x[i]; cout << endl;
 
 // =======================================================
 //                  Helper Functions
@@ -103,16 +101,13 @@ int compare(vector<char> num1, vector<char> num2, bool numsAreAlreadyReversed = 
 // =======================================================
 
 // This function adds two vectors (both of them positive)
-vector<char> addPositive(vector<char> num1, vector<char> num2, bool alreadyReversed = false, bool hideOverflow = false){
-    if(!alreadyReversed){
-		reverse(num1);
-		reverse(num2);
-	}
-	
+	// Inputs should be already reversed
+	// It hides overflow
+vector<char> add(vector<char> num1, vector<char> num2){
 	vector<char> result;
 
     // Set num1 to be larger
-	if(compare(num1, num2, true) == -1){
+	if(num1.size() < num2.size()){
 	    vector<char> temp = num1;
 		num1 = num2;
 		num2 = temp;
@@ -135,20 +130,12 @@ vector<char> addPositive(vector<char> num1, vector<char> num2, bool alreadyRever
 		result.push_back((rem + '0'));
 		i++;
 	}
-	
-	if(carry != 0 && !hideOverflow){
-	    result.push_back((carry + '0'));   
-	}
-
-	if(!alreadyReversed){
-		reverse(result);
-	}
 
     return result;
 }
 
 // This function subtracts two vectors (both of them positive)
-vector<char> subtractPositive(vector<char> num1, vector<char> num2){
+vector<char> subtract(vector<char> num1, vector<char> num2){
 	vector<char> result;
     bool resultIsNegative = false;
 	
@@ -176,11 +163,11 @@ vector<char> subtractPositive(vector<char> num1, vector<char> num2){
     for(SizeType i = s2; i < s1; i++){
         num2.push_back('9');
     }
-    num2 = addPositive(num2, {'1'}, true, true);
+    num2 = add(num2, {'1'});
 		// true requests function to hide overflow
 
     // Subtract
-    result = addPositive(num1, num2, true, true);
+    result = add(num1, num2);
 
     // Delete leading zeros;
     trim(result, true);
@@ -195,54 +182,28 @@ vector<char> subtractPositive(vector<char> num1, vector<char> num2){
     return result;
 }
 
-// This function subtracts two numbers in string (any sign)
-vector<char> subtract(string n1, string n2){
-	vector<char> num1 = convertToVector(n1);
-    vector<char> num2 = convertToVector(n2);
-	vector<char> result;
-
-	bool isNum1Positive = (num1[0] != '-');
-	bool isNum2Positive = (num2[0] != '-');
-
-	trim(num1);
-	trim(num2);
-
-	if(isNum1Positive && isNum2Positive){
-		result = subtractPositive(num1, num2);
-	}
-	else if(isNum1Positive && !isNum2Positive){
-		result = addPositive(num1, num2);
-	}
-	else if(!isNum1Positive && isNum2Positive){
-		result = addPositive(num1, num2);
-		if(result[0] != '0'){
-			result.insert(result.begin(), '-');
-		}
-	}
-	else if(!isNum1Positive && !isNum2Positive){
-		result = subtractPositive(num2, num1);
-		if(result[0] != '0'){
-			result.insert(result.begin(), '-');
-		}
-	}
-
-	return result;
-}
-
-
 int main(){
-	string n1, n2;
-	cout << "Enter string 1 : ";
-	cin >> n1;
-	cout << "Enter string 2 : ";
-	cin >> n2;
-    
-	vector<char> result = subtract(n1,n2);
+    int t;
+    cin >> t;
 
-	cout << "Result : ";
-    for(char ch: result){
-	    cout << ch;
-	}
-    cout << endl;
-	return 0;
+    for(int i = 0; i < t; i++){
+        string n1, n2;
+        cin >> n1;
+        cin >> n2;
+
+        vector<char> num1 = convertToVector(n1);
+        vector<char> num2 = convertToVector(n2);
+
+        trim(num1);
+        trim(num2);
+
+        vector<char> result = subtract(num1, num2);
+
+        for(char ch: result){
+            cout << ch;
+        }
+        cout << endl;
+    }
+
+    return 0;
 }

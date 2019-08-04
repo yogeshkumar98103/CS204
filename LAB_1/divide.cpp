@@ -3,8 +3,6 @@
 using namespace std;
 
 typedef vector<char>::size_type SizeType;
-#define deb(x) cout << #x << " : " << x << endl;
-#define printVector(x) for(SizeType i = 0; i < x.size(); i++) cout << x[i]; cout << endl;
 
 // =======================================================
 //                  Helper Functions
@@ -133,7 +131,7 @@ vector<char> concatenate(vector<char> part1, vector<char> part2){
 // =======================================================
 
 // This function adds two vectors (both of them positive)
-vector<char> addPositive(vector<char> num1, vector<char> num2, bool alreadyReversed = false, bool hideOverflow = false){
+vector<char> add(vector<char> num1, vector<char> num2, bool alreadyReversed = false, bool hideOverflow = false){
     if(!alreadyReversed){
 		reverse(num1);
 		reverse(num2);
@@ -152,7 +150,7 @@ vector<char> addPositive(vector<char> num1, vector<char> num2, bool alreadyRever
 	SizeType s2 = num2.size();
 	
     SizeType i = 0;
-	int carry = 0, sum, rem;
+	int carry = 0, sum, remainder;
 
 	while(i < s1){
 		sum = (num1[i] - '0') + carry;
@@ -160,9 +158,9 @@ vector<char> addPositive(vector<char> num1, vector<char> num2, bool alreadyRever
 			sum += (num2[i] - '0');
 		}
 		carry = sum / 10;
-		rem = sum % 10;
+		remainder = sum % 10;
 		
-		result.push_back((rem + '0'));
+		result.push_back((remainder + '0'));
 		i++;
 	}
 	
@@ -178,7 +176,7 @@ vector<char> addPositive(vector<char> num1, vector<char> num2, bool alreadyRever
 }
 
 // This function subtracts two vectors (both of them positive)
-vector<char> subtractPositive(vector<char> num1, vector<char> num2){
+vector<char> subtract(vector<char> num1, vector<char> num2){
 	vector<char> result;
     bool resultIsNegative = false;
 	
@@ -206,11 +204,11 @@ vector<char> subtractPositive(vector<char> num1, vector<char> num2){
     for(SizeType i = s2; i < s1; i++){
         num2.push_back('9');
     }
-    num2 = addPositive(num2, {'1'}, true, true);
+    num2 = add(num2, {'1'}, true, true);
 		// true requests function to hide overflow
 
     // Subtract
-    result = addPositive(num1, num2, true, true);
+    result = add(num1, num2, true, true);
 
     // Delete leading zeros;
     trim(result, true);
@@ -226,13 +224,13 @@ vector<char> subtractPositive(vector<char> num1, vector<char> num2){
 }
 
 // =======================================================
-//                   Division Functions
+//                   Division Function
 // =======================================================
 
 // This funcion divides two numbers stored in vectors (both should be positive)
-vector<vector<char>> dividePositive(vector<char> num1, vector<char> num2){
+vector<vector<char>> divide(vector<char> num1, vector<char> num2){
     vector<char> quotient;
-    vector<char> remainder;
+    vector<char> remainder = {'0'};
 
     SizeType s1 = num1.size();
     SizeType s2 = num2.size();
@@ -241,24 +239,20 @@ vector<vector<char>> dividePositive(vector<char> num1, vector<char> num2){
         return {{'0'}, num1};
     }
 
-    vector<char> rem = {'0'};
-
     SizeType i = 0;
     SizeType j = s2;
     bool pushZero = false;
     vector<char> part;
-    rem = getPart(num1, i, j);
+    remainder = getPart(num1, i, j);
 
     while(true){
-        part = rem;
+        part = remainder;
         pushZero = false;
-        // cout << "PART : "; printVector(part);
+        
         while(j < s1 && compare(part, num2) == -1){
             part.push_back(num1[j++]);
-            if(pushZero || ((rem.size() == 1 && rem[0] == '0') && (num1[j - 1] == '0'))) quotient.push_back('0');
+            if(pushZero || ((remainder.size() == 1 && remainder[0] == '0') && (num1[j - 1] == '0'))) quotient.push_back('0');
             else pushZero = true;
-            // cout << "PART : "; printVector(part);
-            // cout << "Quotient : "; printVector(quotient);
         }
         if(j >= s1 && compare(part, num2) == -1) break;
         i = j;
@@ -268,57 +262,18 @@ vector<vector<char>> dividePositive(vector<char> num1, vector<char> num2){
         int digit = 0;
         int compResult = -1;
         while(compResult == -1){
-            sumTillNow = addPositive(sumTillNow, num2);
+            sumTillNow = add(sumTillNow, num2);
             digit++;
             compResult = compare(sumTillNow, part);
         }
         if(compResult == 1){
-            sumTillNow = subtractPositive(sumTillNow, num2);
+            sumTillNow = subtract(sumTillNow, num2);
             digit--;
         }
-        rem = subtractPositive(part, sumTillNow);
-        // cout << "DIGIT : " << digit << "\t";
-        // cout << "REM : "; printVector(rem);
+        remainder = subtract(part, sumTillNow);
         quotient.push_back(digit + '0');
     }
-    remainder = rem;
     return {quotient, remainder};
-}
-
-// This function divides two numbers stored in string (any sign)
-vector<vector<char>> divide(string n1, string n2){
-    // Convert these strings to vectors
-    vector<char> num1 = convertToVector(n1);
-    vector<char> num2 = convertToVector(n2);
-
-    // Handle Sign
-    bool resultIsNegative = (num1[0] == '-')^(num2[0] == '-');
-
-    // Trim leading zeros and sign
-    trim(num1);
-    trim(num2);
-
-    // Handle divide by zero
-    if(num2[0] == '0'){
-        cout << "Cannot divide by zero" << endl;
-        exit(1);
-    }
-
-    // Divide these positive numbers
-    vector<vector<char>> result = dividePositive(num1, num2);
-
-    // Handle Sign
-    if(resultIsNegative){
-        // Add -ve sign to quotient
-        if(result[0][0] != '0')
-            result[0].insert(result[0].begin(), '-');
-
-        // Modify remainder
-        if(result[1][0] != '0')
-            result[1] = subtractPositive(num2, result[1]);
-    }
-    
-    return result;
 }
 
 // =======================================================
@@ -326,28 +281,29 @@ vector<vector<char>> divide(string n1, string n2){
 // =======================================================
 
 int main(){
-    string num1, num2;
+    int t;
+    cin >> t;
 
-    // Input two numbers as string
-    cout << "Enter number 1 : "; 
-    cin >> num1;
-    cout << "Enter number 2 : ";
-    cin >> num2;
+    for(int i = 0; i < t; i++){
+        string n1, n2;
+        cin >> n1;
+        cin >> n2;
 
-    // Divide
-    vector<vector<char>> result = divide(num1, num2);
-    vector<char> quotient = result[0];
-    vector<char> remainder = result[1];
+        vector<char> num1 = convertToVector(n1);
+        vector<char> num2 = convertToVector(n2);
+        
+        trim(num1);
+        trim(num2);
 
-    // Print Quotient
-    cout << "Quotient : ";
-    for(char ele: quotient) cout << ele;
-    cout << endl;
+        vector<vector<char>> result = divide(num1, num2);
 
-    // Print Remainder
-    cout << "Remainder : ";
-    for(char ele: remainder) cout << ele;
-    cout << endl;
+        for(vector<char> part: result){
+            for(char ch: part){
+                cout << ch;
+            }
+            cout << endl;
+        }
+    }
 
     return 0;
 }

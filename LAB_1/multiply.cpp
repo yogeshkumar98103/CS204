@@ -3,15 +3,7 @@
 using namespace std;
 
 typedef vector<char>::size_type SizeType;
-#define deb(x) cout << #x << " : " << x << endl;
-#define print(x) for(SizeType i = 0; i < x.size(); i++) cout << x[i]; cout << endl;
 
-void printReverse(vector<char> x){
-    for(int i = x.size() - 1; i >= 0; i--){
-        cout << x[i]; 
-    }
-    cout << endl;
-}
 // =======================================================
 //                  Helper Functions
 // =======================================================
@@ -73,52 +65,17 @@ void trim(vector<char> &num, bool numIsAlreadyReversed = false){
     }
 }
 
-// This function compares two vectors (both should be positive)
-int compare(vector<char> num1, vector<char> num2, bool numsAreAlreadyReversed = false){
-    // Trim leading zeros
-    trim(num1, numsAreAlreadyReversed);
-    trim(num2, numsAreAlreadyReversed);
-
-    // Declare Sizes
-    int size1 = num1.size();
-    int size2 = num2.size();
-
-    // Compare on basis of size
-    if(size1 > size2) return 1;
-    if(size1 < size2) return -1;
-
-    // Both vectors are of same size
-    int i;
-	if(numsAreAlreadyReversed){
-		i = size1 - 1;
-		while(i >= 0 && num1[i] == num2[i]) i--;
-		if(i == 0) return 0;
-	}
-	else{
-		i = 0;
-		while(i < size1 && num1[i] == num2[i]) i++;
-		if(i == size1) return 0;
-	}
-
-	if(num1[i] > num2[i]) return 1;
-	return -1;
-}
-
 // =======================================================
 //                Multiplication Functions
 // =======================================================
 
 // This function adds two vectors (both of them positive)
-vector<char> addPositive(vector<char> num1, vector<char> num2, bool alreadyReversed = false, bool hideOverflow = false){
-    if(!alreadyReversed){
-		reverse(num1);
-		reverse(num2);
-	}
-	
+    // Both numbers should be reversed
+vector<char> add(vector<char> num1, vector<char> num2){
 	vector<char> result;
 
     // Set num1 to be larger
-	if(compare(num1, num2, true) == -1){
+	if(num1.size() < num2.size()){
 	    vector<char> temp = num1;
 		num1 = num2;
 		num2 = temp;
@@ -142,19 +99,15 @@ vector<char> addPositive(vector<char> num1, vector<char> num2, bool alreadyRever
 		i++;
 	}
     
-	if(carry != 0 && !hideOverflow){
+	if(carry != 0){
 	    result.push_back((carry + '0'));   
-	}
-
-	if(!alreadyReversed){
-		reverse(result);
 	}
 
     return result;
 }
 
 // This function multiplies two numbers stored in vector
-vector<char> multiplyPositive(vector<char> num1, vector<char> num2){
+vector<char> multiply(vector<char> num1, vector<char> num2){
     reverse(num1);
     reverse(num2);
 
@@ -191,58 +144,40 @@ vector<char> multiplyPositive(vector<char> num1, vector<char> num2){
         }
 
         // Maintain a sum of `tempSum` till now
-        result = addPositive(tempSum, result, true);
+        result = add(tempSum, result);
     }
     
     reverse(result);
     return result;
 }
 
-vector<char> multiply(string n1, string n2){
-    // Convert these strings to vectors
-    vector<char> num1 = convertToVector(n1);
-    vector<char> num2 = convertToVector(n2);
-
-    // Handle Sign
-    bool resultIsNegative = (num1[0] == '-')^(num2[0] == '-');
-
-    // Trim leading zeros and sign
-    trim(num1);
-    trim(num2);
-
-    // Multiply these positive numbers
-    vector<char> result = multiplyPositive(num1, num2);
-
-    // Handle Sign
-    if(resultIsNegative){
-        if(result[0] != '0')
-            result.insert(result.begin(), '-');
-    }
-    
-    return result;
-}
 
 // =======================================================
 //                     Main Function
 // =======================================================
 
 int main(){
-    string num1, num2;
+    int t;
+    cin >> t;
 
-    // Input two numbers as string
-    cout << "Enter number 1 : "; 
-    cin >> num1;
-    cout << "Enter number 2 : ";
-    cin >> num2;
+    for(int i = 0; i < t; i++){
+        string n1, n2;
+        cin >> n1;
+        cin >> n2;
 
-    // Multiply
-    vector<char> result = multiply(num1, num2);
+        vector<char> num1 = convertToVector(n1);
+        vector<char> num2 = convertToVector(n2);
 
-    // Print Result
-    for(char ele: result){
-        cout << ele;
+        trim(num1);
+        trim(num2);
+
+        vector<char> result = multiply(num1, num2);
+
+        for(char ch: result){
+            cout << ch;
+        }
+        cout << endl;
     }
-    cout << endl;
 
     return 0;
 }

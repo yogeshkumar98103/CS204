@@ -34,33 +34,21 @@ void reverse(vector<char> &num){
     }
 }
 
-// This function trims leading zeros and sign inplace
-void trim(vector<char> &num, bool numIsAlreadyReversed = false){
+// This function trims leading zeros
+void trim(vector<char> &num){
     SizeType size = num.size();
     if(size == 0) return;
 
-    if(numIsAlreadyReversed){
-        SizeType i = size - 1;
-        if(num[i] == '-') i--;
+    SizeType i = 0;
+    while(i < size - 1 && num[i] == '0') i++;
 
-        while(i > 0 && num[i] == '0'){
-            num.pop_back();
-            i--;
+    // Shift by i places;
+    if(i != 0){
+        for(SizeType j = i; j < size; j++){
+            num[j - i] = num[j];
         }
-    }
-    else{
-        SizeType i = 0;
-        if(num[0] == '-') i++;
-        while(i < size - 1 && num[i] == '0') i++;
-
-        // Shift by i places;
-        if(i != 0){
-            for(SizeType j = i; j < size; j++){
-                num[j - i] = num[j];
-            }
-            for(SizeType j = 0; j < i; j++){
-                num.pop_back();
-            }
+        for(SizeType j = 0; j < i; j++){
+            num.pop_back();
         }
     }
 }
@@ -80,7 +68,6 @@ vector<char> add(vector<char> num1, vector<char> num2){
 
     // Set num1 to be larger
     if(num1.size() < num2.size()){
-        cout << "true" << endl;
         vector<char> temp = num1;
         num1 = num2;
         num2 = temp;
@@ -119,24 +106,27 @@ vector<char> add(vector<char> num1, vector<char> num2){
 
 
 int main(){
-    string n1, n2;
-    cout << "Enter string 1 : ";
-    cin >> n1;
-    cout << "Enter string 2 : ";
-    cin >> n2;
+    int t;
+    cin >> t;
 
-    vector<char> num1 = convertToVector(n1);
-    vector<char> num2 = convertToVector(n2);
+    for(int i = 0; i < t; i++){
+        string n1, n2;
+        cin >> n1;
+        cin >> n2;
 
-    trim(num1);
-    trim(num2);
+        vector<char> num1 = convertToVector(n1);
+        vector<char> num2 = convertToVector(n2);
 
-    vector<char> result = add(num1, num2);
+        trim(num1);
+        trim(num2);
 
-    cout << "Result : ";
-    for(char ch: result){
-        cout << ch;
+        vector<char> result = add(num1, num2);
+
+        for(char ch: result){
+            cout << ch;
+        }
+        cout << endl;
     }
-    cout << endl;
+
     return 0;
 }
