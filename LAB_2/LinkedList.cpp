@@ -19,16 +19,16 @@ class LinkedList{
     LinkedList();
 
     // This function adds a node at the start of the linked list
-    void AddFirst(int x, int y);
+    int AddFirst(int x, int y);
 
     // This function deletes the first node of linked list
-    void DelFirst();
+    int DelFirst();
 
     // This function deletes the node with point containing {x,y}
-    void Del(int x, int y);
+    int Del(int x, int y);
 
     // This function gives all the points that are present atmost at d-distance from origin
-    void Search(long d);
+    vector<Node*> Search(float d);
 
     // This function returns true if {x,y} is present in linked list
     bool Search(int x, int y); 
@@ -47,6 +47,8 @@ int main(){
     int t;
     cin >> t;
     int command, x, y;
+    vector<Node*> list;
+
     for(int i = 0; i < t; i++){
         cin >> command;
 
@@ -67,7 +69,11 @@ int main(){
 
             case 4:
                 cin >> x;
-                coorList.Search(x);
+                list = coorList.Search(x);
+                for(Node* node: list){
+                    cout << "(" << node->x << "," << node->y << ") ";
+                }
+                cout << endl;
                 break;
 
             case 5:
@@ -96,24 +102,33 @@ LinkedList::LinkedList(){
 }
 
 // This function adds a node at the start of the linked list
-void LinkedList::AddFirst(int x, int y){
+int LinkedList::AddFirst(int x, int y){
     Node* newNode = new Node;
+
+    if(newNode == nullptr){
+        // Cannot create new Node
+        return -1;
+    }
+
     newNode->x = x;
     newNode->y = y;
     newNode->next = head;
     head = newNode;
+
+    return 0;
 }
 
 // This function deletes the first node of linked list
-void LinkedList::DelFirst(){
-    if(head == nullptr) return;
+int LinkedList::DelFirst(){
+    if(head == nullptr) return -1;
     Node* delNode = head;
     head = head->next;
     delete delNode;
+    return 0;
 }
 
 // This function deletes the node with point containing {x,y}
-void LinkedList::Del(int x, int y){
+int LinkedList::Del(int x, int y){
     Node* current = head;
     Node* prev = nullptr;
 
@@ -122,36 +137,39 @@ void LinkedList::Del(int x, int y){
             // Found it !!
             if(prev == nullptr){
                 // Delete From Start
-                DelFirst();
-                return;
+                return DelFirst();
             }
 
             prev->next = current->next;
             delete current;
 
-            return;
+            return 0;
         }
 
         prev = current;
         current = current->next;
     }
+
+    return -1;
 }
 
 // This function gives all the points that are present atmost at d-distance from origin
-void LinkedList::Search(long d){
+vector<Node *> LinkedList::Search(float d){
     Node* current = head;
     int x,y;
+    vector<Node *> list;
+
     while(current != nullptr){
         x = current->x;
         y = current->y;
         long distanceSquared = x * x + y * y;
-        if(distanceSquared <= d * d){
-            cout << "(" << x << "," << y << ") ";
+        if(distanceSquared <= (d * d)){
+            list.push_back(current);
         }
         
         current = current->next;
     }
-    cout << endl;
+    return list;
 }
 
 // This function returns true if {x,y} is present in linked list
