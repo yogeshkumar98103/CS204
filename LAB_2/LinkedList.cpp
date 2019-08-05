@@ -28,7 +28,7 @@ class LinkedList{
     int Del(int x, int y);
 
     // This function gives all the points that are present atmost at d-distance from origin
-    vector<Node*> Search(float d);
+    vector<Node*> Search(double d);
 
     // This function returns true if {x,y} is present in linked list
     bool Search(int x, int y); 
@@ -44,12 +44,12 @@ class LinkedList{
 
 int main(){
     LinkedList coorList;
-    int t;
+    long long t;
     cin >> t;
     int command, x, y;
     vector<Node*> list;
 
-    for(int i = 0; i < t; i++){
+    for(long long i = 0; i < t; i++){
         cin >> command;
 
         switch(command){
@@ -59,12 +59,12 @@ int main(){
                 break;
 
             case 2:
-                coorList.DelFirst();
+                cout << coorList.DelFirst();
                 break;
 
             case 3:
                 cin >> x >> y;
-                coorList.Del(x,y);
+                cout << coorList.Del(x,y);
                 break;
 
             case 4:
@@ -154,7 +154,7 @@ int LinkedList::Del(int x, int y){
 }
 
 // This function gives all the points that are present atmost at d-distance from origin
-vector<Node *> LinkedList::Search(float d){
+vector<Node *> LinkedList::Search(double d){
     Node* current = head;
     int x,y;
     vector<Node *> list;
@@ -162,7 +162,8 @@ vector<Node *> LinkedList::Search(float d){
     while(current != nullptr){
         x = current->x;
         y = current->y;
-        long distanceSquared = x * x + y * y;
+        long long distanceSquared = x * x + y * y;
+       
         if(distanceSquared <= (d * d)){
             list.push_back(current);
         }
