@@ -44,9 +44,10 @@ class LinkedList{
 
 int main(){
     LinkedList coorList;
-
+    int t;
+    cin >> t;
     int command, x, y;
-    while(true){
+    for(int i = 0; i < t; i++){
         cin >> command;
 
         switch(command){
