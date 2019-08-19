@@ -28,7 +28,7 @@ public:
     int Del(int x, int y);
 
     // This function gives all the points that are present atmost at d-distance from origin
-    vector<Node*> Search(double d);
+    long long Search(double d);
 
     // This function returns true if {x,y} is present in linked list
     bool Search(int x, int y);
@@ -59,21 +59,21 @@ int main(){
                 break;
 
             case 2:
-                cout << coorList.DelFirst();
+                if(coorList.DelFirst() == -1){
+                    cout << -1 << endl;   
+                }
                 break;
 
             case 3:
                 cin >> x >> y;
-                cout << coorList.Del(x,y);
+                if(coorList.Del(x,y) == -1){
+                    cout << -1 << endl;   
+                }
                 break;
 
             case 4:
                 cin >> x;
-                list = coorList.Search(x);
-                for(Node* node: list){
-                    cout << "(" << node->x << "," << node->y << ") ";
-                }
-                cout << endl;
+                cout << coorList.Search(x) << endl;
                 break;
 
             case 5:
@@ -154,23 +154,24 @@ int LinkedList::Del(int x, int y){
 }
 
 // This function gives all the points that are present atmost at d-distance from origin
-vector<Node *> LinkedList::Search(double d){
+long long LinkedList::Search(double d){
     Node* current = head;
     int x,y;
-    vector<Node *> list;
-
+    long long count = 0LL;
     while(current != nullptr){
         x = current->x;
         y = current->y;
-        long long distanceSquared = (long long)(x * x) + (long long)(y * y);
-
-        if(distanceSquared <= (long double)(d * d)){
-            list.push_back(current);
+        long long distanceSquared = x * x + y * y;
+       
+        if(distanceSquared <= (d * d)){
+            count++;
         }
 
         current = current->next;
     }
-    return list;
+    
+    if(count == 0) return -1;
+    return count;
 }
 
 // This function returns true if {x,y} is present in linked list
