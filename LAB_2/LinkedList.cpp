@@ -14,7 +14,7 @@ struct Node{
 
 class LinkedList{
     Node* head;
-  public: 
+public:
     // Constructor
     LinkedList();
 
@@ -31,11 +31,11 @@ class LinkedList{
     vector<Node*> Search(double d);
 
     // This function returns true if {x,y} is present in linked list
-    bool Search(int x, int y); 
+    bool Search(int x, int y);
 
     // This function returns the number of nodes present in linked list
     long long Length();
-    
+
 };
 
 // =======================================================
@@ -53,7 +53,7 @@ int main(){
         cin >> command;
 
         switch(command){
-            case 1: 
+            case 1:
                 cin >> x >> y;
                 coorList.AddFirst(x,y);
                 break;
@@ -86,12 +86,12 @@ int main(){
                 cout << coorList.Length() << endl;
                 break;
 
-            default: 
+            default:
                 cout << "Exiting" << endl;
         }
     }
-    
-    return 0; 
+
+    return 0;
 }
 
 // =======================================================
@@ -162,12 +162,12 @@ vector<Node *> LinkedList::Search(double d){
     while(current != nullptr){
         x = current->x;
         y = current->y;
-        long long distanceSquared = x * x + y * y;
-       
-        if(distanceSquared <= (d * d)){
+        long long distanceSquared = (long long)(x * x) + (long long)(y * y);
+
+        if(distanceSquared <= (long double)(d * d)){
             list.push_back(current);
         }
-        
+
         current = current->next;
     }
     return list;
@@ -180,7 +180,7 @@ bool LinkedList::Search(int x, int y){
     while(current != nullptr){
         if(current->x == x && current->y == y)
             return true;
-        
+
         current = current->next;
     }
 
