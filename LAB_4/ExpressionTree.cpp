@@ -131,7 +131,9 @@ public:
                 ans.push_back(variable);
             }
             else if(isOperator(exp[i])){
-                while(!s.empty() && s.top() != '(' && precedence[s.top()] > precedence[exp[i]]){
+                while(!s.empty() && s.top() != '(' &&
+                      ((s.top() == '^' && precedence[s.top()] > precedence[exp[i]]) ||
+                       (s.top() != '^' && precedence[s.top()] >= precedence[exp[i]]))){
                     string op(1,s.top());
                     ans.push_back(op);
                     s.pop();
@@ -220,13 +222,16 @@ int main(){
     int t;
     cin >> t;
     while(t--){
-        string exp;
-        cin >> exp;
-        ExpressionTree tree(exp);
-        tree.buildTree();
-        cout << tree.evaluateTree() << endl;
+        int lines;
+        cin >> lines;
+        while(lines--) {
+            string exp;
+            cin >> exp;
+            ExpressionTree tree(exp);
+            tree.buildTree();
+            cout << tree.evaluateTree() << endl;
+        }
     }
-
 
     return 0;
 }
