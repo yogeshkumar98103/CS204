@@ -31,6 +31,7 @@ public:
 
     ExpressionTree(string expression){
         exp = expression;
+        precedence['!'] = 4;
         precedence['^'] = 3;
         precedence['*'] = 2;
         precedence['/'] = 2;
@@ -55,7 +56,8 @@ public:
                 c == '-' ||
                 c == '*' ||
                 c == '/' ||
-                c == '^'
+                c == '^' ||
+                c == '!'
         );
     }
 
@@ -107,6 +109,16 @@ public:
         int i = 0;
         int size = exp.size();
 
+        // Fix Unary Minus
+        while(i < size){
+            if(exp[i] == '-' && (i == 0 || exp[i-1] == '(' || isOperator(exp[i-1]))){
+                exp[i] = '!';
+            }
+            ++i;
+        }
+
+        i = 0;
+
         while(i < size){
             if(exp[i] == '('){
                 s.push('(');
@@ -131,23 +143,28 @@ public:
                 ans.push_back(variable);
             }
             else if(isOperator(exp[i])){
-                while(!s.empty() && s.top() != '(' &&
-                      ((s.top() == '^' && precedence[s.top()] > precedence[exp[i]]) ||
-                       (s.top() != '^' && precedence[s.top()] >= precedence[exp[i]]))){
-                    string op(1,s.top());
-                    ans.push_back(op);
-                    s.pop();
+                if(exp[i] == '!'){
+                    ans.push_back("0");
                 }
-
+                else{
+                    while(!s.empty() && s.top() != '(' &&
+                          ((s.top() == '^' && precedence[s.top()] > precedence[exp[i]]) ||
+                           (s.top() != '^' && precedence[s.top()] >= precedence[exp[i]]))){
+                        char ch = s.top() == '!' ? '-' : s.top();
+                        string op(1,ch);
+                        ans.push_back(op);
+                        s.pop();
+                    }
+                }
                 s.push(exp[i]);
             }
-
 
             ++i;
         }
 
         while(!s.empty()){
-            string op(1, s.top());
+            char ch = s.top() == '!' ? '-' : s.top();
+            string op(1,ch);
             ans.push_back(op);
             s.pop();
         }
