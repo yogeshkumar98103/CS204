@@ -1,129 +1,237 @@
 #include <iostream>
+#include <stack>
+#include <vector>
+#include <map>
+#include <cstring>
+#include <cmath>
 using namespace std;
 
-enum NodeType{
-    primitive,
-    variable,
-    unaryOperator,
-    binaryOperator,
+enum TokenType{
+    Variable,
+    Number,
+    Operator
 };
 
 struct Node{
     string data;
     int value;
-    NodeType type;
-    Node* operandList[2];
+    TokenType type;
+    Node* leftChild;
+    Node* rightChild;
 };
 
 class ExpressionTree{
+    string exp;
     Node* root;
-    string expression;
+    int ans;
 
-  public:
-    
-    bool isOperator(int index){
-        return(
-            expression[index] == '+' || 
-            expression[index] == '-' || 
-            expression[index] == '*' || 
-            expression[index] == '/' || 
-            expression[index] == '^'
-        ); 
+public:
+
+    map<char, int> precedence;
+
+    ExpressionTree(string expression){
+        exp = expression;
+        precedence['^'] = 3;
+        precedence['*'] = 2;
+        precedence['/'] = 2;
+        precedence['+'] = 1;
+        precedence['-'] = 1;
     }
 
-    int flatten(int start, int end, int& innerStart, int& innerEnd){
-        int level = start;
-        while(level <= end && expression[level] == '(') level++;
+    bool isNumber(char c){
+        return (c >= 48 && c <= 57);
+    }
 
-        int count = level - start;
-        int i = level;
-        while(i <= end && count != 0){
-            if(expression[i] == '(') ++count;
-            else if(expression[i] == ')') --count;
+    bool isAlphabet(char c){
+        return (
+                (c >= 65 && c <= 90) ||
+                (c >= 97 && c <= 122)
+        );
+    }
+
+    bool isOperator(char c){
+        return(
+                c == '+' ||
+                c == '-' ||
+                c == '*' ||
+                c == '/' ||
+                c == '^'
+        );
+    }
+
+
+
+    string parse(TokenType type, int& index){
+        string num;
+        int i = index;
+        int size = exp.size();
+
+        switch(type){
+            case Number:
+                while(i < size && isNumber(exp[i])){
+                    i++;
+                }
+                break;
+
+            case Variable:
+                while(i < size && isAlphabet(exp[i])){
+                    i++;
+                }
+                break;
+        }
+
+
+
+        num = exp.substr(index, i - index);
+        index = i - 1;
+        return num;
+    }
+
+    string parseVariable(int& index){
+        string num;
+        int i = index;
+        int size = exp.size();
+
+        while(i < size && isNumber(exp[i])){
             i++;
         }
 
-        if(count != 0){
-            // Invalid Expression;
-            return -1;
+        num = exp.substr(index, i - index);
+        index = i - 1;
+        return num;
+    }
+
+    vector<string> infixToPostFix(){
+        vector<string> ans;
+        stack<char> s;
+        int i = 0;
+        int size = exp.size();
+
+        while(i < size){
+            if(exp[i] == '('){
+                s.push('(');
+            }
+            else if(exp[i] == ')'){
+                while(s.top() != '('){
+                    string op(1, s.top());
+                    ans.push_back(op);
+                    s.pop();
+                }
+
+                s.pop();
+            }
+            else if(isNumber(exp[i])){
+                // Parse This number
+                string num = parse(Number, i);
+                ans.push_back(num);
+            }
+            else if(isAlphabet(exp[i])){
+                // Parse Variable
+                string variable = parse(Variable, i);
+                ans.push_back(variable);
+            }
+            else if(isOperator(exp[i])){
+                while(!s.empty() && s.top() != '(' &&
+                      ((s.top() == '^' && precedence[s.top()] > precedence[exp[i]]) ||
+                       (s.top() != '^' && precedence[s.top()] >= precedence[exp[i]]))){
+                    string op(1,s.top());
+                    ans.push_back(op);
+                    s.pop();
+                }
+
+                s.push(exp[i]);
+            }
+
+
+            ++i;
         }
 
-        innerStart = level;
+        while(!s.empty()){
+            string op(1, s.top());
+            ans.push_back(op);
+            s.pop();
+        }
+        return ans;
+    }
 
-        if(i == level){
-            // Not a nested Expression
-                // Got till first operator
-            while(i <= end && !isOperator(i)) i++;
-            innerEnd = i - 1;
+    void evaluate(Node *current){
+        if(current->type != Operator){
+            current->value = stoi(current->data);
         }
         else{
-            innerEnd = i - level - 1;
-        }
+            evaluate(current->leftChild);
+            evaluate(current->rightChild);
 
-        return (level - start);
+            int a = current->rightChild->value;
+            int b = current->leftChild->value;
+
+
+            char op = current->data[0];
+            switch(op){
+                case '+' : current->value = a + b;          break;
+                case '-' : current->value = a - b;          break;
+                case '*' : current->value = a * b;          break;
+                case '/' : current->value = a / b;          break;
+                case '^' : current->value = pow(a,b);       break;
+            }
+        }
     }
 
-    Node* buildTree(int start, int end){
-        Node* current = new Node;
-        int size = expression.size();
-        int leftStart, leftEnd, rightStart, rightEnd;
-
-        int level = flatten(start, end, leftStart, leftEnd);
-
-        if(level == -1){
-            // In valid Expression
-        }
-
-        if(leftEnd + level == end){
-            if(expression[leftStart] == '-'){
-                current->data = '-';
-                current->type = unaryOperator;
-            }
-            else{
-                current->data = expression.substr(leftStart, leftEnd - leftStart + 1);
-                current->type = primitive;
-                // TODO: Add support for variable
-            }
-        }
-
-        else{
-            level = flatten(leftEnd + level + 2, end, rightStart, rightEnd);
-            if(level == -1){
-                // In valid Expression
-            }
-
-            current->type = binaryOperator;
-            current->data = expression[leftEnd + level + 1];
-            current->operandList[0] = buildTree(leftStart, leftEnd);
-            current->operandList[1] = buildTree(rightStart, rightEnd);
-
-        }
-
-        
-
-        // First part is a nested expression (E1)__op__E2
-            
-            else{
-                // Expression is invalid
-
-            }
-            
-        // }
-        // else{
-            // First expression is simple expression
-
-            while(true){
-                if()
-            }
-
-            current->operandList[0] = buildTree(leftExpression);
-            current->operandList[1] = buildTree(rightExpression);
-        // }
-        
-        return current;
+    int evaluateTree(){
+        evaluate(root);
+        return root->value;
     }
 
-    Node* evaluate(){
+    void buildTree(){
+        stack<Node*> s;
+        vector<string> postfixExp = infixToPostFix();
 
+        for(string ele: postfixExp){
+            Node* current = new Node;
+            current->data = ele;
+            current->leftChild = nullptr;
+            current->rightChild = nullptr;
+
+            if(isNumber(ele[0])){
+                current->type = Number;
+            }
+            else if(isAlphabet(ele[0])){
+                current->type = Variable;
+            }
+            else if(isOperator(ele[0])){
+                current->type = Operator;
+            }
+
+            if(current->type == Operator){
+                current->leftChild = s.top();
+                s.pop();
+                current->rightChild = s.top();
+                s.pop();
+            }
+
+            s.push(current);
+        }
+
+        root = s.top();
     }
+};
+
+
+
+int main(){
+    int t;
+    cin >> t;
+    while(t--){
+        int lines;
+        cin >> lines;
+        while(lines--) {
+            string exp;
+            cin >> exp;
+            ExpressionTree tree(exp);
+            tree.buildTree();
+            cout << tree.evaluateTree() << endl;
+        }
+    }
+
+    return 0;
 }
