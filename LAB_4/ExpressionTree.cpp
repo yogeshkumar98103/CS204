@@ -91,10 +91,12 @@ class ExpressionTree{
         int size = exp.size();
 
         // Fix Unary Minus
+        char prev = ' ';
         while(i < size){
-            if(exp[i] == '-' && (i == 0 || exp[i-1] == '(' || isOperator(exp[i-1]))){
+            if(exp[i] == '-' && (i == 0 || prev == '(' || isOperator(prev))){
                 exp[i] = '!';
             }
+            if(exp[i] != ' ') prev = exp[i];
             ++i;
         }
 
@@ -152,7 +154,7 @@ class ExpressionTree{
         return ans;
     }
 
-    void evaluateTree(Node *current){
+    bool evaluateTree(Node *current){
         int a,b;
         char op;
 
@@ -162,30 +164,33 @@ class ExpressionTree{
                 break;
 
             case Variable:
+                if(variableList.find(current->data) == variableList.end())
+                    return false;
                 current->value = variableList[current->data];
                 break;
 
             case Operator:
-                evaluateTree(current->leftChild);
-                evaluateTree(current->rightChild);
+                if(evaluateTree(current->leftChild) && evaluateTree(current->rightChild)){
+                    a = current->rightChild->value;
+                    b = current->leftChild->value;
 
-                a = current->rightChild->value;
-                b = current->leftChild->value;
-
-                op = current->data[0];
-                switch(op){
-                    case '+' : current->value = a + b;          break;
-                    case '-' : current->value = a - b;          break;
-                    case '*' : current->value = a * b;          break;
-                    case '/' : current->value = a / b;          break;
-                    case '^' : current->value = pow(a,b);       break;
+                    op = current->data[0];
+                    switch(op){
+                        case '+' : current->value = a + b;          break;
+                        case '-' : current->value = a - b;          break;
+                        case '*' : current->value = a * b;          break;
+                        case '/' : current->value = a / b;          break;
+                        case '^' : current->value = pow(a,b);       break;
+                    }
+                    break;
                 }
-                break;
+                else return false;
         }
+        return true;
     }
 
-    int evaluate(){
-        evaluateTree(root);
+    int evaluate(bool& isValid){
+        isValid = evaluateTree(root);
         return root->value;
     }
 
@@ -228,10 +233,10 @@ class Compiler{
 
   public:
 
-    int evaluate(string expression){
+    int evaluate(string expression, bool& isValid){
         ExpressionTree tree(expression, variableList);
         tree.buildTree();
-        return tree.evaluate();
+        return tree.evaluate(isValid);
     }
 
     string newStatement(string& statement){
@@ -262,20 +267,32 @@ class Compiler{
             while(j < size && statement[j] == ' ') ++j;
 
             // If there is no expression just resturn value of variable
-            if(j == size) return to_string(variableList[variable]);
+            if(j == size){
+                if(variableList.find(variable) == variableList.end()) 
+                    return "CANT BE EVALUATED";
+                return to_string(variableList[variable]);
+            }
 
             // Second part is Expression
             string expression = statement.substr(j, size-j);
 
             // Evaluate and assign
-            variableList[variable] = evaluate(expression);
+            bool isValid;
+            int value = evaluate(expression, isValid);
+            if(isValid){
+                variableList[variable] = value;
+                return "";
+            }
         }
         else{
             // It is an expression
-            return to_string(evaluate(statement));
+            bool isValid;
+            int value = evaluate(statement, isValid);
+            if(isValid)
+                return to_string(value);
         }
 
-        return "";
+        return "CANT BE EVALUATED";
     }
 };
 
