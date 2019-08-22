@@ -4,6 +4,7 @@
 #include <map>
 #include <cstring>
 #include <cmath>
+#include <cstdio>
 using namespace std;
 
 enum TokenType{
@@ -24,13 +25,13 @@ class ExpressionTree{
     string exp;
     Node* root;
     int ans;
-
-public:
-
     map<char, int> precedence;
+    map<string, int> variableList;
 
-    ExpressionTree(string expression){
+  public:
+    ExpressionTree(const string& expression, const map<string, int>& variables){
         exp = expression;
+        variableList = variables;
         precedence['!'] = 4;
         precedence['^'] = 3;
         precedence['*'] = 2;
@@ -39,18 +40,18 @@ public:
         precedence['-'] = 1;
     }
 
-    bool isNumber(char c){
+    static bool isNumber(char c){
         return (c >= 48 && c <= 57);
     }
 
-    bool isAlphabet(char c){
+    static bool isAlphabet(char c){
         return (
                 (c >= 65 && c <= 90) ||
                 (c >= 97 && c <= 122)
         );
     }
 
-    bool isOperator(char c){
+    static bool isOperator(char c){
         return(
                 c == '+' ||
                 c == '-' ||
@@ -61,8 +62,6 @@ public:
         );
     }
 
-
-
     string parse(TokenType type, int& index){
         string num;
         int i = index;
@@ -70,32 +69,14 @@ public:
 
         switch(type){
             case Number:
-                while(i < size && isNumber(exp[i])){
-                    i++;
-                }
+                while(i < size && isNumber(exp[i])) ++i;
                 break;
 
             case Variable:
-                while(i < size && isAlphabet(exp[i])){
-                    i++;
-                }
+                while(i < size && isAlphabet(exp[i])) ++i;
                 break;
-        }
-
-
-
-        num = exp.substr(index, i - index);
-        index = i - 1;
-        return num;
-    }
-
-    string parseVariable(int& index){
-        string num;
-        int i = index;
-        int size = exp.size();
-
-        while(i < size && isNumber(exp[i])){
-            i++;
+            
+            default: break;
         }
 
         num = exp.substr(index, i - index);
@@ -171,31 +152,40 @@ public:
         return ans;
     }
 
-    void evaluate(Node *current){
-        if(current->type != Operator){
-            current->value = stoi(current->data);
-        }
-        else{
-            evaluate(current->leftChild);
-            evaluate(current->rightChild);
+    void evaluateTree(Node *current){
+        int a,b;
+        char op;
 
-            int a = current->rightChild->value;
-            int b = current->leftChild->value;
+        switch(current->type){
+            case Number:
+                current->value = stoi(current->data);
+                break;
 
+            case Variable:
+                current->value = variableList[current->data];
+                break;
 
-            char op = current->data[0];
-            switch(op){
-                case '+' : current->value = a + b;          break;
-                case '-' : current->value = a - b;          break;
-                case '*' : current->value = a * b;          break;
-                case '/' : current->value = a / b;          break;
-                case '^' : current->value = pow(a,b);       break;
-            }
+            case Operator:
+                evaluateTree(current->leftChild);
+                evaluateTree(current->rightChild);
+
+                a = current->rightChild->value;
+                b = current->leftChild->value;
+
+                op = current->data[0];
+                switch(op){
+                    case '+' : current->value = a + b;          break;
+                    case '-' : current->value = a - b;          break;
+                    case '*' : current->value = a * b;          break;
+                    case '/' : current->value = a / b;          break;
+                    case '^' : current->value = pow(a,b);       break;
+                }
+                break;
         }
     }
 
-    int evaluateTree(){
-        evaluate(root);
+    int evaluate(){
+        evaluateTree(root);
         return root->value;
     }
 
@@ -233,7 +223,61 @@ public:
     }
 };
 
+class Compiler{
+    map<string, int> variableList;
 
+  public:
+
+    int evaluate(string expression){
+        ExpressionTree tree(expression, variableList);
+        tree.buildTree();
+        return tree.evaluate();
+    }
+
+    string newStatement(string& statement){
+        int i = 0;
+        int size = statement.size();
+
+        // Ignore leading Whitespaces
+        while(i < size && statement[i] == ' ')++i;
+        int start = i;
+
+        // Try to find equality operator
+        while(i < size){
+            if(statement[i] == '=') break;
+            ++i;
+        }
+
+        // It is an assignment statement
+        if(i < size){
+            // Ignore Whitespaces before '='
+            int j = i - 1;
+            while(j >= 0 && statement[j] == ' ') --j;
+
+            // First part is variable
+            string variable = statement.substr(start, j + 1);
+
+            // Ignore Whitespaces after '='
+            j = i + 1;
+            while(j < size && statement[j] == ' ') ++j;
+
+            // If there is no expression just resturn value of variable
+            if(j == size) return to_string(variableList[variable]);
+
+            // Second part is Expression
+            string expression = statement.substr(j, size-j);
+
+            // Evaluate and assign
+            variableList[variable] = evaluate(expression);
+        }
+        else{
+            // It is an expression
+            return to_string(evaluate(statement));
+        }
+
+        return "";
+    }
+};
 
 int main(){
     int t;
@@ -241,12 +285,15 @@ int main(){
     while(t--){
         int lines;
         cin >> lines;
+        cin.ignore(1,'\n');
+        Compiler compiler;
         while(lines--) {
-            string exp;
-            cin >> exp;
-            ExpressionTree tree(exp);
-            tree.buildTree();
-            cout << tree.evaluateTree() << endl;
+            string statement;
+            getline(cin, statement);
+            string result = compiler.newStatement(statement);
+            if(!result.empty()){
+                cout << result << endl;
+            }
         }
     }
 
