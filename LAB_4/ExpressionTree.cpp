@@ -29,6 +29,7 @@ class ExpressionTree{
     map<string, int> variableList;
 
   public:
+   // Constructor
     ExpressionTree(const string& expression, const map<string, int>& variables){
         exp = expression;
         variableList = variables;
@@ -40,10 +41,12 @@ class ExpressionTree{
         precedence['-'] = 1;
     }
 
+    // Checks if given character is a number
     static bool isNumber(char c){
         return (c >= 48 && c <= 57);
     }
 
+    // Checks if given character is an alphabet
     static bool isAlphabet(char c){
         return (
                 (c >= 65 && c <= 90) ||
@@ -51,6 +54,7 @@ class ExpressionTree{
         );
     }
 
+    // Checks if given character is an operator
     static bool isOperator(char c){
         return(
                 c == '+' ||
@@ -62,6 +66,9 @@ class ExpressionTree{
         );
     }
 
+    /* This function recieves an index and from that index onwards 
+     * it parses the number or variable based on parameter type
+     */ 
     string parse(TokenType type, int& index){
         string num;
         int i = index;
@@ -84,6 +91,7 @@ class ExpressionTree{
         return num;
     }
 
+    // This function recieves an infix expression in string and converts it into postfix expression stored
     vector<string> infixToPostFix(){
         vector<string> ans;
         stack<char> s;
@@ -154,6 +162,7 @@ class ExpressionTree{
         return ans;
     }
 
+    // This function evaluates the expression Tree
     bool evaluateTree(Node *current){
         int a,b;
         char op;
@@ -194,6 +203,7 @@ class ExpressionTree{
         return root->value;
     }
 
+    // This function builds the expression tree
     void buildTree(){
         stack<Node*> s;
         vector<string> postfixExp = infixToPostFix();
