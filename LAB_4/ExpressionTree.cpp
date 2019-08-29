@@ -159,10 +159,12 @@ public:
         root = nullptr;
     }
 
+    // Checks if given character is a number
     static bool isNumber(char c){
         return (c >= 48 && c <= 57);
     }
 
+    // Checks if given character is an alphabet
     static bool isAlphabet(char c){
         return (
                 (c >= 65 && c <= 90) ||
@@ -170,6 +172,7 @@ public:
         );
     }
 
+    // Checks if given character is an operator
     static bool isOperator(char c){
         return(
                 c == '+' ||
@@ -181,6 +184,9 @@ public:
         );
     }
 
+    /* This function recieves an index and from that index onwards 
+     * it parses the number or variable based on parameter type
+     */ 
     string parse(TokenType type, int& index){
         string num;
         int i = index;
@@ -203,6 +209,7 @@ public:
         return num;
     }
 
+    // This function recieves an infix expression in string and converts it into postfix expression stored
     vector<string> infixToPostFix(){
         vector<string> ans;
         stack<char> s;
@@ -274,6 +281,7 @@ public:
         return ans;
     }
 
+    // This function evaluates the expression Tree
     bool evaluateTree(Node *current){
         int a,b;
         char op;
@@ -319,6 +327,7 @@ public:
         return (statementDeclared <= currentStatementIndex);
     }
 
+    // This function builds the expression tree
     void buildTree(){
         stack<Node*> s;
         vector<string> postfixExp = infixToPostFix();
