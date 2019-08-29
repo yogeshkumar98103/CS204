@@ -3,7 +3,8 @@
 #include <vector>
 #include <cstring>
 #include <cmath>
-#include <cstdio>
+#include <stdexcept>
+
 using namespace std;
 
 template <typename KeyType, typename ValueType>
