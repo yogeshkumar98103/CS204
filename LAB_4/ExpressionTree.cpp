@@ -1,11 +1,123 @@
 #include <iostream>
 #include <stack>
 #include <vector>
-#include <map>
 #include <cstring>
 #include <cmath>
 #include <cstdio>
 using namespace std;
+
+template <typename KeyType, typename ValueType>
+class map{
+    typedef int (*Comp_Func_Type)(const KeyType &a, const KeyType& b);
+
+    vector<pair<KeyType, ValueType>> list;
+    pair<KeyType, int> cache;
+
+public:
+    Comp_Func_Type compFn = [](const KeyType &a, const KeyType& b){
+        if(a < b) return -1;
+        else if(a == b) return 0;
+        return 1;
+    };
+
+    map(){
+        cache = {"0", -1};
+    };
+    map(Comp_Func_Type compFn){
+        this->compFn = compFn;
+        cache = {"0", -1};
+    }
+
+    void add(KeyType key, ValueType value){
+        list.push_back({key, value});
+    }
+
+    void sort(){
+        quickSort(0, list.size() - 1);
+        cache = {"0", -1};
+    }
+
+    bool has(KeyType key){
+        int index = binarySearch(key);
+        if(index == -1) return false;
+        cache = {key, index};
+        return true;
+    }
+
+    ValueType &operator[] (KeyType key){
+        if(cache.second != -1 && compFn(cache.first,key) == 0) return list[cache.second].second;
+        int index = binarySearch(key);
+        if(index == -1) throw out_of_range("Invalid Key");
+        cache = {key, index};
+        return list[index].second;
+    }
+
+    void print(){
+        for(const pair<KeyType, ValueType>& ele: list){
+            cout << ele.first << " : " << ele.second << endl;
+        }
+    }
+
+private:
+
+    // ----------------- Quick Sort -------------------
+    void quickSort(int start, int end){
+        if(end > start){
+            int pivotIndex = partition(start,end);
+            quickSort(start,pivotIndex - 1);
+            quickSort(pivotIndex + 1,end);
+        }
+    }
+
+    int partition(int start, int end){
+        KeyType pivot = list[end].first;
+        int i = start - 1, j = start;
+        pair<KeyType, ValueType> temp;
+
+        while(j < end){
+            if(compFn(list[j].first, pivot) != 1){
+                ++i;
+                temp = list[i];
+                list[i] = list[j];
+                list[j] = temp;
+            }
+            ++j;
+        }
+
+        temp = list[++i];
+        list[i] = list[end];
+        list[end] = temp;
+
+        return i;
+    }
+
+    // ---------------- Binary Seach ------------------
+    int binarySearch(KeyType key){
+        int left = 0;
+        int right = list.size() - 1;
+        int mid;
+
+        while(left<=right) {
+            mid = (left + right) / 2;
+            switch (compFn(list[mid].first, key)) {
+                case 0 :
+                    return mid;
+                    break;
+                case 1 :
+                    right = mid - 1;
+                    break;
+                case -1 :
+                    left = mid + 1;
+                    break;
+            }
+        }
+
+        return -1;
+    }
+};
+
+typedef map<string, pair<int, int>> VariableListType;
+
 
 enum TokenType{
     Variable,
@@ -24,20 +136,27 @@ struct Node{
 class ExpressionTree{
     string exp;
     Node* root;
-    int ans;
-    map<char, int> precedence;
-    map<string, int> variableList;
+    int currentStatementIndex;
+    int precedence(char c){
+        int val;
+        switch(c){
+            case '!' : val = 4;         break;
+            case '^' : val = 3;         break;
+            case '*' :
+            case '/' : val = 2;         break;
+            case '+' :
+            case '-' : val = 1;         break;
+        }
+        return val;
+    }
+    VariableListType* variableList;
 
-  public:
-    ExpressionTree(const string& expression, const map<string, int>& variables){
+public:
+    ExpressionTree(const int currentStatementIndex, const string& expression, VariableListType* variables){
+        this->currentStatementIndex = currentStatementIndex;
         exp = expression;
         variableList = variables;
-        precedence['!'] = 4;
-        precedence['^'] = 3;
-        precedence['*'] = 2;
-        precedence['/'] = 2;
-        precedence['+'] = 1;
-        precedence['-'] = 1;
+        root = nullptr;
     }
 
     static bool isNumber(char c){
@@ -75,7 +194,7 @@ class ExpressionTree{
             case Variable:
                 while(i < size && isAlphabet(exp[i])) ++i;
                 break;
-            
+
             default: break;
         }
 
@@ -108,7 +227,8 @@ class ExpressionTree{
             }
             else if(exp[i] == ')'){
                 while(s.top() != '('){
-                    string op(1, s.top());
+                    char ch = s.top() == '!' ? '-' : s.top();
+                    string op(1,ch);
                     ans.push_back(op);
                     s.pop();
                 }
@@ -131,8 +251,8 @@ class ExpressionTree{
                 }
                 else{
                     while(!s.empty() && s.top() != '(' &&
-                          ((s.top() == '^' && precedence[s.top()] > precedence[exp[i]]) ||
-                           (s.top() != '^' && precedence[s.top()] >= precedence[exp[i]]))){
+                          ((s.top() == '^' && precedence(s.top()) > precedence(exp[i])) ||
+                           (s.top() != '^' && precedence(s.top()) >= precedence(exp[i])))){
                         char ch = s.top() == '!' ? '-' : s.top();
                         string op(1,ch);
                         ans.push_back(op);
@@ -164,9 +284,9 @@ class ExpressionTree{
                 break;
 
             case Variable:
-                if(variableList.find(current->data) == variableList.end())
+                if(!(variableList->has(current->data) && wasDeclared(current->data)))
                     return false;
-                current->value = variableList[current->data];
+                current->value = ((*variableList)[current->data]).first;
                 break;
 
             case Operator:
@@ -192,6 +312,11 @@ class ExpressionTree{
     int evaluate(bool& isValid){
         isValid = evaluateTree(root);
         return root->value;
+    }
+
+    bool wasDeclared(string variable){
+        int statementDeclared = (*variableList)[variable].second;
+        return (statementDeclared <= currentStatementIndex);
     }
 
     void buildTree(){
@@ -228,18 +353,42 @@ class ExpressionTree{
     }
 };
 
+enum StatementType{
+    Expression,
+    Assignment
+};
+
+struct Statement{
+    string variable;
+    string expression;
+    StatementType type;
+};
+
 class Compiler{
-    map<string, int> variableList;
+    VariableListType variableList;
 
-  public:
 
-    int evaluate(string expression, bool& isValid){
-        ExpressionTree tree(expression, variableList);
-        tree.buildTree();
-        return tree.evaluate(isValid);
+    int lines;
+    static string defaultMessage;
+    int currentStatementIndex = 0;
+
+public:
+    vector<string> results;
+    vector<Statement> statements;
+
+    Compiler(int numberOfStatements){
+        lines = numberOfStatements;
+        statements.reserve(lines);
+        variableList.compFn = [](const string& str1, const string& str2)->int{
+            int res = str1.compare(str2);
+            if(res < 0) return -1;
+            if(res > 0) return 1;
+            return 0;
+        };
     }
 
-    string newStatement(string& statement){
+    void addStatement(string statement){
+        Statement newStatement;
         int i = 0;
         int size = statement.size();
 
@@ -260,41 +409,70 @@ class Compiler{
             while(j >= 0 && statement[j] == ' ') --j;
 
             // First part is variable
-            string variable = statement.substr(start, j + 1);
+            newStatement.variable = statement.substr(start, j + 1);
+            if(!variableList.has(newStatement.variable))
+                variableList.add(newStatement.variable, {0, currentStatementIndex});
 
             // Ignore Whitespaces after '='
             j = i + 1;
             while(j < size && statement[j] == ' ') ++j;
 
-            // If there is no expression just resturn value of variable
-            if(j == size){
-                if(variableList.find(variable) == variableList.end()) 
-                    return "CANT BE EVALUATED";
-                return to_string(variableList[variable]);
-            }
-
             // Second part is Expression
-            string expression = statement.substr(j, size-j);
+            newStatement.expression = statement.substr(j, size-j);
+            newStatement.type = Assignment;
 
-            // Evaluate and assign
-            bool isValid;
-            int value = evaluate(expression, isValid);
-            if(isValid){
-                variableList[variable] = value;
-                return "";
-            }
         }
         else{
             // It is an expression
-            bool isValid;
-            int value = evaluate(statement, isValid);
-            if(isValid)
-                return to_string(value);
+            newStatement.expression = statement;
+            newStatement.type = Expression;
+        }
+        statements.push_back(newStatement);
+        ++currentStatementIndex;
+    }
+
+    void compile(){
+        currentStatementIndex = 0;
+        variableList.sort();
+        for(Statement statement: statements){
+            compileStatement(statement);
+        }
+    }
+
+private:
+    void compileStatement(Statement statement){
+        bool isValid = false;
+        int value;
+
+        switch(statement.type){
+            case Expression :
+                value = evaluate(statement.expression, isValid);
+                if(isValid) results.push_back(to_string(value));
+
+                break;
+
+            case Assignment :
+                value = evaluate(statement.expression, isValid);
+                if(isValid)
+                    variableList[statement.variable].first = value;
+
+                break;
         }
 
-        return "CANT BE EVALUATED";
+        if(!isValid){
+            results.push_back(defaultMessage);
+        }
+        ++currentStatementIndex;
+    }
+
+    int evaluate(string expression, bool& isValid){
+        ExpressionTree tree(currentStatementIndex, expression, &variableList);
+        tree.buildTree();
+        return tree.evaluate(isValid);
     }
 };
+
+string Compiler::defaultMessage = "CANT BE EVALUATED";
 
 int main(){
     int t;
@@ -303,14 +481,17 @@ int main(){
         int lines;
         cin >> lines;
         cin.ignore(1,'\n');
-        Compiler compiler;
+        Compiler compiler(lines);
         while(lines--) {
             string statement;
             getline(cin, statement);
-            string result = compiler.newStatement(statement);
-            if(!result.empty()){
-                cout << result << endl;
-            }
+            compiler.addStatement(statement);
+        }
+
+        // Output
+        compiler.compile();
+        for(string result: compiler.results){
+            cout << result << endl;
         }
     }
 
