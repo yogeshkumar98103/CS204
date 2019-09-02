@@ -116,7 +116,8 @@ class ExpressionTree{
             }
             else if(exp[i] == ')'){
                 while(s.top() != '('){
-                    string op(1, s.top());
+                    char ch = s.top() == '!' ? '-' : s.top();
+                    string op(1,ch);
                     ans.push_back(op);
                     s.pop();
                 }
