@@ -36,6 +36,8 @@ private:
     CompFuncType compFunc;
     AVLTreeAccessBehaviorType accessBehaviour;
     Value defaultValue;
+    AVLNode* cachedNode;
+    bool cacheAvailable;
 
 public:
     // Constructors
@@ -52,24 +54,29 @@ public:
     void recursiveDelete(AVLNode*);
 
     // Main Functions
-    void insertNode(Key, Value);
-    AVLNode* searchNode(Key);
-    AVLNode* deleteNode(Key);
+    bool insert(Key, Value);
+    Value& search(Key);
+    bool has(Key);
+    bool remove(Key);
 
     // Setters
     void setAccessBehaviour(AVLTreeAccessBehaviorType type);
     void setDefaultValue(Value value);
 
     // Operator overloading
-    AVLNode& operator[](Key);
+    Value& operator[](Key);
 
 private:
     // Helper Functions
     AVLNode* createNode(Key, Value);
     AVLNode* recursiveInsert(AVLNode*, Key&, Value&);
+    AVLNode* searchNode(Key);
+    AVLNode* recursiveRemove(AVLNode*, Key&);
     AVLNode* findParentNode(Key, bool&);
     int findBalanceFactor(AVLNode*);
     void updateHeight(AVLNode*);
+    AVLNode* findMinNode(AVLNode*);
+    AVLNode* findMaxNode(AVLNode*);
 
     // Rotations
     AVLNode* LLRotation(AVLTreeNode<Key, Value>*);
