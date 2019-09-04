@@ -6,7 +6,7 @@
 #include <vector>
 
 int max(int x, int y){
-    if(x < y) return x;
+    if(x > y) return x;
     return y;
 }
 
@@ -14,6 +14,8 @@ int max(int x, int y){
 template<class Key, class Value>
 AVLTree<Key, Value>::AVLTree(){
     root = nullptr;
+    cacheAvailable = false;
+    cachedNode = nullptr;
     compFunc = [](const Key& a, const Key& b)->int{
         if(a < b) return -1;
         if(a > b) return 1;
@@ -37,16 +39,21 @@ void AVLTree<Key, Value>::recursiveDelete(AVLTreeNode<Key, Value>* current){
 
 // -------------------- INSERT ------------------------
 template<class Key, class Value>
-void AVLTree<Key, Value>::insertNode(Key key, Value value){
+bool AVLTree<Key, Value>::insert(Key key, Value value){
+    operationResult = true;
     root = recursiveInsert(root, key, value);
+    return operationResult;
 }
 
 template<class Key, class Value>
 AVLTreeNode<Key, Value>* AVLTree<Key, Value>::recursiveInsert(AVLNode* current, Key& key, Value& value){
-    if(!current)  return createNode(key, value);
+    if(!current)  return cachedNode = createNode(key, value);
 
     switch(compFunc(current->key, key)){
-        case 0  : return current;
+        case 0  : 
+            cacheAvailable = true;    
+            operationResult = false;
+            return cachedNode = current;
         case 1  : current->leftChild = recursiveInsert(current->leftChild, key, value);   break;
         case -1 : current->rightChild = recursiveInsert(current->rightChild, key, value); break;
     }
@@ -91,12 +98,29 @@ void AVLTree<Key, Value>::updateHeight(AVLNode* node){
 
 // -------------------- SEARCH ------------------------
 template<class Key, class Value>
+Value& AVLTree<Key, Value>::search(Key& key){
+    if(cacheAvailable && cachedNode->key == key) return cachedNode->value;
+    AVLNode* foundNode = searchNode(key);
+    if(!foundNode){
+        // Throw error
+    }
+    return foundNode->value;
+}
+
+template<class Key, class Value>
+bool AVLTree<Key, Value>::has(Key& key){
+    if(cacheAvailable && cachedNode->key == key) return true;
+    AVLNode* foundNode = searchNode(key);
+    return (foundNode == nullptr);
+}
+
+template<class Key, class Value>
 AVLTreeNode<Key, Value>* AVLTree<Key, Value>::searchNode(Key key){
     AVLTreeNode<Key, Value>* current = root;
     AVLTreeNode<Key, Value> foundNode;
     while(current){
         switch(compFunc(current->key, key)){
-            case 0  :   return current;
+            case 0  :   cacheAvailable = true;              return cachedNode = current;
             case 1  :   current = current->leftChild;       break;
             case -1 :   current = current->rightChild;      break;
         }
@@ -108,14 +132,78 @@ AVLTreeNode<Key, Value>* AVLTree<Key, Value>::searchNode(Key key){
 
 // -------------------- DELETE ------------------------
 template<class Key, class Value>
-AVLTreeNode<Key, Value>* AVLTree<Key, Value>::deleteNode(Key key){
-    AVLTreeNode<Key, Value>* foundNode = searchNode(key);
-    if(!foundNode){
-        // Node not found
-        // throw error
+bool AVLTree<Key, Value>::remove(Key& key){
+    if(cacheAvailable && cachedNode->key == key){
+        cacheAvailable = false;
+        cachedNode = nullptr;
+    }
+
+    operationResult = true;
+    root = recursiveRemove(root, key);
+    return operationResult;
+}
+
+template<class Key, class Value>
+AVLTreeNode<Key, Value>* AVLTree<Key, Value>::recursiveRemove(AVLTreeNode<Key, Value>* current, Key& key){
+    if(!current){
+        operationResult = false;
         return nullptr;
     }
+
+    switch(compFunc(current->key, key)){
+        case 0  : 
+            // CASE : Both Child
+            if(current->leftChild && current->rightChild){
+                AVLNode* minNode = findMinNode(current->rightChild);
+                current->rightChild = recursiveRemove(current->rightChild, minNode->key);
+                minNode->rightChild = current->rightChild;
+                minNode->leftChild = current->leftChild;
+                updateHeight(minNode);
+                delete current;
+                return minNode;
+            }
+
+            // CASE : Exactly One Child
+            if(current->leftChild) return current->leftChild;
+            else return current->rightChild;
+
+        case 1  : current->leftChild = recursiveRemove(current->leftChild, key);   break;
+        case -1 : current->rightChild = recursiveRemove(current->rightChild, key); break;
+    }
+
+    int balanceFactor = findBalanceFactor(current);
+    if(balanceFactor > 1){
+        // Left Imbalance
+        int childBalanceFactor = findBalanceFactor(current->leftChild);
+        if(childBalanceFactor > 0) current = LLRotation(current);
+        if(childBalanceFactor < 0) current = LRRotation(current);
+        updateHeight(current->leftChild);
+        updateHeight(current->rightChild);
+    }
+    else if(balanceFactor < -1){
+        // Right Imbalance
+        int childBalanceFactor = findBalanceFactor(current->rightChild);
+        if(childBalanceFactor > 0) current = RLRotation(current);
+        if(childBalanceFactor < 0) current = RRRotation(current);
+        updateHeight(current->leftChild);
+        updateHeight(current->rightChild);
+    }
+    updateHeight(current);
+    return current;
 }
+
+template<class Key, class Value>
+AVLTreeNode<Key, Value>* AVLTree<Key, Value>::replaceWithMin(AVLTreeNode<Key, Value>* current, AVLTreeNode<Key, Value>* parent){
+    if(!current->leftChild){
+        parent->leftChild = current->rightChild;
+        current->rightChild = nullptr;
+        return current;
+    }
+
+    AVLNode* minNode = replaceWithMin(current->leftChild, current);
+    updateHeight(current);
+    return minNode;
+} 
 
 template<class Key, class Value>
 AVLTreeNode<Key, Value>* AVLTree<Key, Value>::findParentNode(Key key, bool& nodeExists){
@@ -133,6 +221,23 @@ AVLTreeNode<Key, Value>* AVLTree<Key, Value>::findParentNode(Key key, bool& node
     // Node is not present;
     nodeExists = false;
     return parent;
+}
+
+// -------------- ACCESSORY FUNCTIONS -----------------
+template<class Key, class Value>
+AVLTreeNode<Key, Value>* AVLTree<Key, Value>::findMinNode(AVLNode* current){
+    while(current->leftChild){
+        current = current->leftChild;
+    }
+    return current;
+}
+
+template<class Key, class Value>
+AVLTreeNode<Key, Value>* AVLTree<Key, Value>::findMaxNode(AVLNode* current){
+    while(current->rightChild){
+        current = current->rightChild;
+    }
+    return current;
 }
 
 // -------------------- SETTERS -----------------------
@@ -202,21 +307,25 @@ AVLTreeNode<Key, Value>* AVLTree<Key, Value>::RRRotation(AVLTreeNode<Key, Value>
     return newPivot;
 }
 
+// --------------- OPERATOR OVERLOADING -----------------
 template<class Key, class Value>
-AVLTreeNode<Key, Value>& AVLTree<Key, Value>:: operator[](Key key){
+Value& AVLTree<Key, Value>:: operator[](Key key){
+    if(cacheAvailable && cachedNode->key == key) return cachedNode->value;
+    AVLNode* foundNode;
     switch(accessBehaviour){
         case Default_Behavior :
         case Error_If_Not_Found:
-            AVLNode* foundNode = searchNode(key);
+            foundNode = searchNode(key);
             if(!foundNode){
                 // Throw error
-                throw
+                // throw
             }
-            return *foundNode;
+            return foundNode->value;
 
             break;
         case Create_If_Not_Found:
-            insertNode(key, defaultValue);
+            insert(key, defaultValue);
+            return cachedNode->value;
     }
 }
 
