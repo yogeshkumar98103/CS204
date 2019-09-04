@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_4/ExpressionTree.cpp
+iostream
+-
+stack
+-
+vector
+-
+cstring
+-
+cmath
+-
+stdexcept
+-
+
