@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <vector>
+#include "Sort.h"
 using namespace std;
 
 template<class Key, class Value>
@@ -43,12 +44,13 @@ private:
 public:
     // Constructors
     AVLTree();
-    // AVLTree(vector<Key>, vector<Value>);
-    // AVLTree(Key keys[], Value values[], int);
-    // AVLTree(vector<pair<Key, Value>>);
-    // AVLTree(pair<Key, Value> keyValuePair[], int);
-    // AVLTree(const AVLTree<Key, Value>&);
-    // AVLTree(const AVLTree<Key, Value>&&);
+    AVLTree(vector<Key>&, const Value&);
+    AVLTree(vector<Key>&, vector<Value>&);
+    AVLTree(Key keys[], Value values[], int);
+    AVLTree(vector<pair<Key, Value>>&);
+    AVLTree(pair<Key, Value> keyValuePair[], int);
+    AVLTree(const AVLTree<Key, Value>&);
+    AVLTree(const AVLTree<Key, Value>&&);
 
     // Destructors
     ~AVLTree();
@@ -65,7 +67,7 @@ public:
     void setDefaultValue(Value value);
 
     // Operator overloading
-    Value& operator[](Key);
+    Value& operator[](const Key&);
 
 private:
     // Helper Functions
@@ -76,9 +78,13 @@ private:
     AVLNode* findParentNode(Key, bool&);
     int findBalanceFactor(AVLNode*);
     void updateHeight(AVLNode*);
-    AVLNode* replaceWithMin(AVLNode*, AVLNode*);
     AVLNode* findMinNode(AVLNode*);
     AVLNode* findMaxNode(AVLNode*);
+
+    // Constructor Helper
+    AVLNode* makeAVLTree(AVLNode* nodes[], int, int);
+    AVLNode* copyTree(AVLNode*);
+    static bool sortCompFunc(AVLNode* &, AVLNode* &);
 
     // Rotations
     AVLNode* LLRotation(AVLTreeNode<Key, Value>*);

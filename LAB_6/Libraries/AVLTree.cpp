@@ -3,7 +3,6 @@
 //
 
 #include "AVLTree.h"
-#include <vector>
 
 int max(int x, int y){
     if(x > y) return x;
@@ -22,6 +21,111 @@ AVLTree<Key, Value>::AVLTree(){
         return 0;
     };
 }
+
+template<class Key, class Value>
+AVLTree<Key, Value>::AVLTree(vector<Key>& keys, const Value& defaultValue){
+    int size = keys.size();
+    AVLNode* nodes[size];
+    this->defaultValue = defaultValue;
+    for(int i = 0; i < size; ++i){
+        nodes[i] = createNode(keys[i], defaultValue);
+    }
+    mySort(nodes, size, &AVLTree<Key, Value>::sortCompFunc);
+
+    root = makeAVLTree(nodes, 0, size - 1);
+}
+
+template<class Key, class Value>
+AVLTree<Key, Value>::AVLTree(vector<Key>& keys, vector<Value>& values){
+    int size = keys.size();
+    AVLNode* nodes[size];
+    for(int i = 0; i < size; ++i){
+        nodes[i] = createNode(keys[i], values[i]);
+    }
+    mySort(nodes, size, &sortCompFunc);
+    root = makeAVLTree(nodes, 0, size - 1);
+}
+
+template<class Key, class Value>
+AVLTree<Key, Value>::AVLTree(Key keys[], Value values[], int size){
+    AVLNode* nodes[size];
+    for(int i = 0; i < size; ++i){
+        nodes[i] = createNode(keys[i], values[i]);
+    }
+    mySort(nodes, size, &sortCompFunc);
+    root = makeAVLTree(nodes, 0, size - 1);
+}
+
+template<class Key, class Value>
+AVLTree<Key, Value>::AVLTree(vector<pair<Key, Value>>& keyValuePair){
+    int size = keyValuePair.size();
+    AVLNode* nodes[size];
+    for(int i = 0; i < size; ++i){
+        nodes[i] = createNode(keyValuePair[i].first, keyValuePair[i].second);
+    }
+    mySort(nodes, size, &sortCompFunc);
+    makeAVLTree(nodes, 0, size - 1);
+}
+
+template<class Key, class Value>
+AVLTree<Key, Value>::AVLTree(pair<Key, Value> keyValuePair[], int size){
+    AVLNode* nodes[size];
+    for(int i = 0; i < size; ++i){
+        nodes[i] = createNode(keyValuePair[i].first, keyValuePair[i].second);
+    }
+    mySort(nodes, size, &sortCompFunc);
+    makeAVLTree(nodes, 0, size - 1);
+}
+
+template<class Key, class Value>
+AVLTree<Key, Value>::AVLTree(const AVLTree<Key, Value>& tree){
+    root = copyTree(tree.root);
+    compFunc = tree.compFunc;
+    accessBehaviour = tree.accessBehaviour;
+    defaultValue = tree.defaultValue;
+    cachedNode = tree.cachedNode;
+    cacheAvailable = tree.cacheAvailable;
+}
+
+template<class Key, class Value>
+AVLTree<Key, Value>::AVLTree(const AVLTree<Key, Value>&& tree){
+    root = tree.root;
+    compFunc = tree.compFunc;
+    accessBehaviour = tree.accessBehaviour;
+    defaultValue = tree.defaultValue;
+    cachedNode = tree.cachedNode;
+    cacheAvailable = tree.cacheAvailable;
+    tree.root = nullptr;
+    delete tree;
+}
+
+template <class Key, class Value>
+AVLTreeNode<Key, Value>* AVLTree<Key, Value>::makeAVLTree(AVLNode* nodes[], int start, int end){
+    if(start == end) return nullptr;
+    int mid = (end+start)/2;
+    AVLNode *current = nodes[mid];
+    current->leftChild = makeAVLTree(nodes, start, mid);
+    current->rightChild = makeAVLTree(nodes ,mid+1, end);
+    updateHeight(current);
+    return current;
+}
+
+template<class Key, class Value>
+AVLTreeNode<Key,Value>* AVLTree<Key, Value>::copyTree(AVLNode* current){
+    if(!current) return nullptr;
+    AVLNode* copiedNode = createNode(current->key, current->value);
+    if(cacheAvailable && current->key == cachedNode->key)
+        cachedNode = copiedNode;
+    copiedNode->leftChild = copyTree(current->leftChild);
+    copiedNode->right = copyTree(current->rightChild);
+    return copiedNode;
+}
+
+template<class Key, class Value>
+bool AVLTree<Key, Value>::sortCompFunc(AVLNode* &x, AVLNode* &y){
+    return (x->key < y->key);
+}
+
 
 // ------------------ DESTRUCTOR ----------------------
 template<class Key, class Value>
@@ -193,19 +297,6 @@ AVLTreeNode<Key, Value>* AVLTree<Key, Value>::recursiveRemove(AVLTreeNode<Key, V
 }
 
 template<class Key, class Value>
-AVLTreeNode<Key, Value>* AVLTree<Key, Value>::replaceWithMin(AVLTreeNode<Key, Value>* current, AVLTreeNode<Key, Value>* parent){
-    if(!current->leftChild){
-        parent->leftChild = current->rightChild;
-        current->rightChild = nullptr;
-        return current;
-    }
-
-    AVLNode* minNode = replaceWithMin(current->leftChild, current);
-    updateHeight(current);
-    return minNode;
-} 
-
-template<class Key, class Value>
 AVLTreeNode<Key, Value>* AVLTree<Key, Value>::findParentNode(Key key, bool& nodeExists){
     AVLNode* current = root, parent = nullptr;
 
@@ -309,7 +400,7 @@ AVLTreeNode<Key, Value>* AVLTree<Key, Value>::RRRotation(AVLTreeNode<Key, Value>
 
 // --------------- OPERATOR OVERLOADING -----------------
 template<class Key, class Value>
-Value& AVLTree<Key, Value>:: operator[](Key key){
+Value& AVLTree<Key, Value>:: operator[](const Key& key){
     if(cacheAvailable && cachedNode->key == key) return cachedNode->value;
     AVLNode* foundNode;
     switch(accessBehaviour){
@@ -326,6 +417,6 @@ Value& AVLTree<Key, Value>:: operator[](Key key){
         case Create_If_Not_Found:
             insert(key, defaultValue);
             return cachedNode->value;
+            break;
     }
 }
-
