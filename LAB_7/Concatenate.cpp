@@ -3,10 +3,11 @@
 
 using namespace std;
 
+
 void computeLargestNum(string numbers[], int size){
-    sort(numbers, size, [](string& num1, string& num2)->bool{
-        string str1 = num1.append(num2);
-        string str2 = num2.append(num1);
+    mySort(numbers, size, [](string& num1, string& num2)->bool{
+        string str1 = num1 + num2;
+        string str2 = num2 + num1;
         return (str1.compare(str2) > 0);
     });
 
@@ -17,6 +18,10 @@ void computeLargestNum(string numbers[], int size){
 }
 
 int main(){
+    int x[4] = {4,3,2,1};
+    mySort(x, x + 4);
+    for(int i = 0; i < 4; i++) cout << x[i] << " ";
+    cout << endl;
     int t,n;
     cin >> t;
     while(t--){
