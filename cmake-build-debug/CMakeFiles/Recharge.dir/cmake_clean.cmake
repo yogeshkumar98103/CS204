@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/Recharge.dir/LAB_6/Recharge.cpp.o"
+  "CMakeFiles/Recharge.dir/LAB_6/Recharge_With_Array.cpp.o"
   "Recharge.pdb"
   "Recharge"
 )

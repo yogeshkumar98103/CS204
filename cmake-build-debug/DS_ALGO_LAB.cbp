@@ -170,13 +170,13 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_4/ExpressionTree.cpp">
+		<Unit filename="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_4 and LAB_5/ExpressionTree.cpp">
 			<Option target="ExpressionTree"/>
 		</Unit>
 		<Unit filename="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_6/Recharge With AVLTree.cpp">
 			<Option target="RechargeWithAVLTree"/>
 		</Unit>
-		<Unit filename="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_6/Recharge.cpp">
+		<Unit filename="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_6/Recharge With Array.cpp">
 			<Option target="Recharge"/>
 		</Unit>
 		<Unit filename="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/CMakeLists.txt">

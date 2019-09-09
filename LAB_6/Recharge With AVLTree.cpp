@@ -2,7 +2,7 @@
 // Created by Yogesh Kumar on 2019-09-04.
 //
 
-#include "AVLTree.h"
+#include "Libraries/AVLTree.h"
 #include <iostream>
 using namespace std;
 
@@ -16,8 +16,13 @@ class Users{
 
 public:
     Users(){
+        // This instructs tree to create new node if its doesn't exist while accessing it
         users_.setAccessBehaviour(Create_If_Not_Found);
+        // This sets the initial value to all newly created Nodes
         users_.setDefaultValue(0);
+
+        max_ = -1;
+        userIDMax_ = -1;
     }
 
     void recharge(int userID, int amount){
@@ -29,12 +34,8 @@ public:
     }
 
     void printMax(){
-        if(max_ == -1){
-            cout << "No data available" << endl;
-        }
-        else{
-            cout << userIDMax_;
-        }
+        if(max_ == -1) cout << "No data available" << endl;
+        else cout << userIDMax_;
     }
 };
 
@@ -55,9 +56,10 @@ int main(){
             case GiveMax :
                 users.printMax();
                 break;
+
+            default: cout << "Wrong Input" << endl;
         }
     }
 
     return 0;
 }
-

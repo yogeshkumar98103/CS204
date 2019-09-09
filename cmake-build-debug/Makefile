@@ -149,59 +149,32 @@ ExpressionTree/fast:
 	$(MAKE) -f CMakeFiles/ExpressionTree.dir/build.make CMakeFiles/ExpressionTree.dir/build
 .PHONY : ExpressionTree/fast
 
-LAB_4/ExpressionTree.o: LAB_4/ExpressionTree.cpp.o
+LAB_4_and_LAB_5/ExpressionTree.o: LAB_4_and_LAB_5/ExpressionTree.cpp.o
 
-.PHONY : LAB_4/ExpressionTree.o
-
-# target to build an object file
-LAB_4/ExpressionTree.cpp.o:
-	$(MAKE) -f CMakeFiles/ExpressionTree.dir/build.make CMakeFiles/ExpressionTree.dir/LAB_4/ExpressionTree.cpp.o
-.PHONY : LAB_4/ExpressionTree.cpp.o
-
-LAB_4/ExpressionTree.i: LAB_4/ExpressionTree.cpp.i
-
-.PHONY : LAB_4/ExpressionTree.i
-
-# target to preprocess a source file
-LAB_4/ExpressionTree.cpp.i:
-	$(MAKE) -f CMakeFiles/ExpressionTree.dir/build.make CMakeFiles/ExpressionTree.dir/LAB_4/ExpressionTree.cpp.i
-.PHONY : LAB_4/ExpressionTree.cpp.i
-
-LAB_4/ExpressionTree.s: LAB_4/ExpressionTree.cpp.s
-
-.PHONY : LAB_4/ExpressionTree.s
-
-# target to generate assembly for a file
-LAB_4/ExpressionTree.cpp.s:
-	$(MAKE) -f CMakeFiles/ExpressionTree.dir/build.make CMakeFiles/ExpressionTree.dir/LAB_4/ExpressionTree.cpp.s
-.PHONY : LAB_4/ExpressionTree.cpp.s
-
-LAB_6/Recharge.o: LAB_6/Recharge.cpp.o
-
-.PHONY : LAB_6/Recharge.o
+.PHONY : LAB_4_and_LAB_5/ExpressionTree.o
 
 # target to build an object file
-LAB_6/Recharge.cpp.o:
-	$(MAKE) -f CMakeFiles/Recharge.dir/build.make CMakeFiles/Recharge.dir/LAB_6/Recharge.cpp.o
-.PHONY : LAB_6/Recharge.cpp.o
+LAB_4_and_LAB_5/ExpressionTree.cpp.o:
+	$(MAKE) -f CMakeFiles/ExpressionTree.dir/build.make CMakeFiles/ExpressionTree.dir/LAB_4_and_LAB_5/ExpressionTree.cpp.o
+.PHONY : LAB_4_and_LAB_5/ExpressionTree.cpp.o
 
-LAB_6/Recharge.i: LAB_6/Recharge.cpp.i
+LAB_4_and_LAB_5/ExpressionTree.i: LAB_4_and_LAB_5/ExpressionTree.cpp.i
 
-.PHONY : LAB_6/Recharge.i
+.PHONY : LAB_4_and_LAB_5/ExpressionTree.i
 
 # target to preprocess a source file
-LAB_6/Recharge.cpp.i:
-	$(MAKE) -f CMakeFiles/Recharge.dir/build.make CMakeFiles/Recharge.dir/LAB_6/Recharge.cpp.i
-.PHONY : LAB_6/Recharge.cpp.i
+LAB_4_and_LAB_5/ExpressionTree.cpp.i:
+	$(MAKE) -f CMakeFiles/ExpressionTree.dir/build.make CMakeFiles/ExpressionTree.dir/LAB_4_and_LAB_5/ExpressionTree.cpp.i
+.PHONY : LAB_4_and_LAB_5/ExpressionTree.cpp.i
 
-LAB_6/Recharge.s: LAB_6/Recharge.cpp.s
+LAB_4_and_LAB_5/ExpressionTree.s: LAB_4_and_LAB_5/ExpressionTree.cpp.s
 
-.PHONY : LAB_6/Recharge.s
+.PHONY : LAB_4_and_LAB_5/ExpressionTree.s
 
 # target to generate assembly for a file
-LAB_6/Recharge.cpp.s:
-	$(MAKE) -f CMakeFiles/Recharge.dir/build.make CMakeFiles/Recharge.dir/LAB_6/Recharge.cpp.s
-.PHONY : LAB_6/Recharge.cpp.s
+LAB_4_and_LAB_5/ExpressionTree.cpp.s:
+	$(MAKE) -f CMakeFiles/ExpressionTree.dir/build.make CMakeFiles/ExpressionTree.dir/LAB_4_and_LAB_5/ExpressionTree.cpp.s
+.PHONY : LAB_4_and_LAB_5/ExpressionTree.cpp.s
 
 LAB_6/Recharge_With_AVLTree.o: LAB_6/Recharge_With_AVLTree.cpp.o
 
@@ -230,6 +203,33 @@ LAB_6/Recharge_With_AVLTree.cpp.s:
 	$(MAKE) -f CMakeFiles/RechargeWithAVLTree.dir/build.make CMakeFiles/RechargeWithAVLTree.dir/LAB_6/Recharge_With_AVLTree.cpp.s
 .PHONY : LAB_6/Recharge_With_AVLTree.cpp.s
 
+LAB_6/Recharge_With_Array.o: LAB_6/Recharge_With_Array.cpp.o
+
+.PHONY : LAB_6/Recharge_With_Array.o
+
+# target to build an object file
+LAB_6/Recharge_With_Array.cpp.o:
+	$(MAKE) -f CMakeFiles/Recharge.dir/build.make CMakeFiles/Recharge.dir/LAB_6/Recharge_With_Array.cpp.o
+.PHONY : LAB_6/Recharge_With_Array.cpp.o
+
+LAB_6/Recharge_With_Array.i: LAB_6/Recharge_With_Array.cpp.i
+
+.PHONY : LAB_6/Recharge_With_Array.i
+
+# target to preprocess a source file
+LAB_6/Recharge_With_Array.cpp.i:
+	$(MAKE) -f CMakeFiles/Recharge.dir/build.make CMakeFiles/Recharge.dir/LAB_6/Recharge_With_Array.cpp.i
+.PHONY : LAB_6/Recharge_With_Array.cpp.i
+
+LAB_6/Recharge_With_Array.s: LAB_6/Recharge_With_Array.cpp.s
+
+.PHONY : LAB_6/Recharge_With_Array.s
+
+# target to generate assembly for a file
+LAB_6/Recharge_With_Array.cpp.s:
+	$(MAKE) -f CMakeFiles/Recharge.dir/build.make CMakeFiles/Recharge.dir/LAB_6/Recharge_With_Array.cpp.s
+.PHONY : LAB_6/Recharge_With_Array.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -241,15 +241,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... ExpressionTree"
-	@echo "... LAB_4/ExpressionTree.o"
-	@echo "... LAB_4/ExpressionTree.i"
-	@echo "... LAB_4/ExpressionTree.s"
-	@echo "... LAB_6/Recharge.o"
-	@echo "... LAB_6/Recharge.i"
-	@echo "... LAB_6/Recharge.s"
+	@echo "... LAB_4_and_LAB_5/ExpressionTree.o"
+	@echo "... LAB_4_and_LAB_5/ExpressionTree.i"
+	@echo "... LAB_4_and_LAB_5/ExpressionTree.s"
 	@echo "... LAB_6/Recharge_With_AVLTree.o"
 	@echo "... LAB_6/Recharge_With_AVLTree.i"
 	@echo "... LAB_6/Recharge_With_AVLTree.s"
+	@echo "... LAB_6/Recharge_With_Array.o"
+	@echo "... LAB_6/Recharge_With_Array.i"
+	@echo "... LAB_6/Recharge_With_Array.s"
 .PHONY : help
 
 

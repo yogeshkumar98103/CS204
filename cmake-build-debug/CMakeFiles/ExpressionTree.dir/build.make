@@ -57,27 +57,27 @@ include CMakeFiles/ExpressionTree.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/ExpressionTree.dir/flags.make
 
-CMakeFiles/ExpressionTree.dir/LAB_4/ExpressionTree.cpp.o: CMakeFiles/ExpressionTree.dir/flags.make
-CMakeFiles/ExpressionTree.dir/LAB_4/ExpressionTree.cpp.o: ../LAB_4/ExpressionTree.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/ExpressionTree.dir/LAB_4/ExpressionTree.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ExpressionTree.dir/LAB_4/ExpressionTree.cpp.o -c /Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_4/ExpressionTree.cpp
+CMakeFiles/ExpressionTree.dir/LAB_4_and_LAB_5/ExpressionTree.cpp.o: CMakeFiles/ExpressionTree.dir/flags.make
+CMakeFiles/ExpressionTree.dir/LAB_4_and_LAB_5/ExpressionTree.cpp.o: ../LAB_4\ and\ LAB_5/ExpressionTree.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/ExpressionTree.dir/LAB_4_and_LAB_5/ExpressionTree.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ExpressionTree.dir/LAB_4_and_LAB_5/ExpressionTree.cpp.o -c "/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_4 and LAB_5/ExpressionTree.cpp"
 
-CMakeFiles/ExpressionTree.dir/LAB_4/ExpressionTree.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ExpressionTree.dir/LAB_4/ExpressionTree.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_4/ExpressionTree.cpp > CMakeFiles/ExpressionTree.dir/LAB_4/ExpressionTree.cpp.i
+CMakeFiles/ExpressionTree.dir/LAB_4_and_LAB_5/ExpressionTree.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ExpressionTree.dir/LAB_4_and_LAB_5/ExpressionTree.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_4 and LAB_5/ExpressionTree.cpp" > CMakeFiles/ExpressionTree.dir/LAB_4_and_LAB_5/ExpressionTree.cpp.i
 
-CMakeFiles/ExpressionTree.dir/LAB_4/ExpressionTree.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ExpressionTree.dir/LAB_4/ExpressionTree.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_4/ExpressionTree.cpp -o CMakeFiles/ExpressionTree.dir/LAB_4/ExpressionTree.cpp.s
+CMakeFiles/ExpressionTree.dir/LAB_4_and_LAB_5/ExpressionTree.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ExpressionTree.dir/LAB_4_and_LAB_5/ExpressionTree.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_4 and LAB_5/ExpressionTree.cpp" -o CMakeFiles/ExpressionTree.dir/LAB_4_and_LAB_5/ExpressionTree.cpp.s
 
 # Object files for target ExpressionTree
 ExpressionTree_OBJECTS = \
-"CMakeFiles/ExpressionTree.dir/LAB_4/ExpressionTree.cpp.o"
+"CMakeFiles/ExpressionTree.dir/LAB_4_and_LAB_5/ExpressionTree.cpp.o"
 
 # External object files for target ExpressionTree
 ExpressionTree_EXTERNAL_OBJECTS =
 
-ExpressionTree: CMakeFiles/ExpressionTree.dir/LAB_4/ExpressionTree.cpp.o
+ExpressionTree: CMakeFiles/ExpressionTree.dir/LAB_4_and_LAB_5/ExpressionTree.cpp.o
 ExpressionTree: CMakeFiles/ExpressionTree.dir/build.make
 ExpressionTree: CMakeFiles/ExpressionTree.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ExpressionTree"

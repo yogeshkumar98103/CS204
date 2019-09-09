@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <vector>
+#include "Sort.h"
 using namespace std;
 
 template<class Key, class Value>
@@ -32,22 +33,24 @@ private:
     typedef int (*CompFuncType)(const Key&, const Key&);
     typedef AVLTreeNode<Key, Value> AVLNode;
 
-    AVLTreeNode<Key, Value>* root;
+    AVLNode* root;
     CompFuncType compFunc;
     AVLTreeAccessBehaviorType accessBehaviour;
     Value defaultValue;
     AVLNode* cachedNode;
     bool cacheAvailable;
+    bool operationResult;
 
 public:
     // Constructors
     AVLTree();
-    // AVLTree(vector<Key>, vector<Value>);
-    // AVLTree(Key keys[], Value values[], int);
-    // AVLTree(vector<pair<Key, Value>>);
-    // AVLTree(pair<Key, Value> keyValuePair[], int);
-    // AVLTree(const AVLTree<Key, Value>&);
-    // AVLTree(const AVLTree<Key, Value>&&);
+    AVLTree(vector<Key>&, const Value&);
+    AVLTree(vector<Key>&, vector<Value>&);
+    AVLTree(Key keys[], Value values[], int);
+    AVLTree(vector<pair<Key, Value>>&);
+    AVLTree(pair<Key, Value> keyValuePair[], int);
+    AVLTree(const AVLTree<Key, Value>&);
+    AVLTree(const AVLTree<Key, Value>&&);
 
     // Destructors
     ~AVLTree();
@@ -55,16 +58,16 @@ public:
 
     // Main Functions
     bool insert(Key, Value);
-    Value& search(Key);
-    bool has(Key);
-    bool remove(Key);
+    Value& search(Key&);
+    bool has(Key&);
+    bool remove(Key&);
 
     // Setters
     void setAccessBehaviour(AVLTreeAccessBehaviorType type);
     void setDefaultValue(Value value);
 
     // Operator overloading
-    Value& operator[](Key);
+    Value& operator[](const Key&);
 
 private:
     // Helper Functions
@@ -77,6 +80,11 @@ private:
     void updateHeight(AVLNode*);
     AVLNode* findMinNode(AVLNode*);
     AVLNode* findMaxNode(AVLNode*);
+
+    // Constructor Helper
+    AVLNode* makeAVLTree(AVLNode* nodes[], int, int);
+    AVLNode* copyTree(AVLNode*);
+    static bool sortCompFunc(AVLNode* &, AVLNode* &);
 
     // Rotations
     AVLNode* LLRotation(AVLTreeNode<Key, Value>*);

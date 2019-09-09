@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/ExpressionTree.dir/LAB_4/ExpressionTree.cpp.o"
+  "CMakeFiles/ExpressionTree.dir/LAB_4_and_LAB_5/ExpressionTree.cpp.o"
   "ExpressionTree.pdb"
   "ExpressionTree"
 )

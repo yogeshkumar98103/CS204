@@ -22,16 +22,16 @@ class Users{
     Users(vector<int>& userIds, vector<int>& amounts, vector<int>& query, int maxUserCount): userIds_(userIds), amounts_(amounts), query_(query) {
         maxUserCount_ = maxUserCount;
         users_ = new Node[maxUserCount];
+        max_ = {-1,-1};
 
         for(int i = 0; i < maxUserCount_; i++){
             users_[i] = {INT_MAX, 0};
         }
 
-        for(int i = 0; i < userIds_.size(); i++){
-            sortedIds_.push_back(userIds_[i]);
+        for(int id: userIds_){
+            sortedIds_.push_back(id);
         }
 
-        max_ = {-1,-1};
         quickSort(sortedIds_, 0, sortedIds_.size() - 1);
         assign();
     }

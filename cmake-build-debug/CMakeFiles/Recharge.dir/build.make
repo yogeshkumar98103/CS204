@@ -57,27 +57,27 @@ include CMakeFiles/Recharge.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/Recharge.dir/flags.make
 
-CMakeFiles/Recharge.dir/LAB_6/Recharge.cpp.o: CMakeFiles/Recharge.dir/flags.make
-CMakeFiles/Recharge.dir/LAB_6/Recharge.cpp.o: ../LAB_6/Recharge.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Recharge.dir/LAB_6/Recharge.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Recharge.dir/LAB_6/Recharge.cpp.o -c /Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_6/Recharge.cpp
+CMakeFiles/Recharge.dir/LAB_6/Recharge_With_Array.cpp.o: CMakeFiles/Recharge.dir/flags.make
+CMakeFiles/Recharge.dir/LAB_6/Recharge_With_Array.cpp.o: ../LAB_6/Recharge\ With\ Array.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Recharge.dir/LAB_6/Recharge_With_Array.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Recharge.dir/LAB_6/Recharge_With_Array.cpp.o -c "/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_6/Recharge With Array.cpp"
 
-CMakeFiles/Recharge.dir/LAB_6/Recharge.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Recharge.dir/LAB_6/Recharge.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_6/Recharge.cpp > CMakeFiles/Recharge.dir/LAB_6/Recharge.cpp.i
+CMakeFiles/Recharge.dir/LAB_6/Recharge_With_Array.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Recharge.dir/LAB_6/Recharge_With_Array.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_6/Recharge With Array.cpp" > CMakeFiles/Recharge.dir/LAB_6/Recharge_With_Array.cpp.i
 
-CMakeFiles/Recharge.dir/LAB_6/Recharge.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Recharge.dir/LAB_6/Recharge.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_6/Recharge.cpp -o CMakeFiles/Recharge.dir/LAB_6/Recharge.cpp.s
+CMakeFiles/Recharge.dir/LAB_6/Recharge_With_Array.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Recharge.dir/LAB_6/Recharge_With_Array.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_6/Recharge With Array.cpp" -o CMakeFiles/Recharge.dir/LAB_6/Recharge_With_Array.cpp.s
 
 # Object files for target Recharge
 Recharge_OBJECTS = \
-"CMakeFiles/Recharge.dir/LAB_6/Recharge.cpp.o"
+"CMakeFiles/Recharge.dir/LAB_6/Recharge_With_Array.cpp.o"
 
 # External object files for target Recharge
 Recharge_EXTERNAL_OBJECTS =
 
-Recharge: CMakeFiles/Recharge.dir/LAB_6/Recharge.cpp.o
+Recharge: CMakeFiles/Recharge.dir/LAB_6/Recharge_With_Array.cpp.o
 Recharge: CMakeFiles/Recharge.dir/build.make
 Recharge: CMakeFiles/Recharge.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable Recharge"
