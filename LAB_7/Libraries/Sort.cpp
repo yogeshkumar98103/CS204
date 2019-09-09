@@ -81,6 +81,12 @@ void mySort(Pointer start, Pointer end, FuncType compFunc){
 }
 
 template<typename T, typename FuncType>
+void mySort(T* start, T* end, FuncType compFunc){
+    Sort<T*> quickSort;
+    quickSort(start, end - 1, compFunc);
+}
+
+template<typename T, typename FuncType>
 void mySort(T A[], int size, FuncType compFunc){
     T* start = A;
     T* end = A + size - 1;

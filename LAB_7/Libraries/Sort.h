@@ -43,8 +43,11 @@ private:
 template<typename T, typename FuncType = bool(*)(const T&, const T&)>
 void mySort(std::vector<T>& Arr, FuncType compFunc = comp::increasing<T>);
 
-template<typename Pointer, typename FuncType = bool(*)(const typename std::decay<Pointer>::type&, const typename std::decay<Pointer>::type&)>
-void mySort(Pointer start, Pointer end, FuncType compFunc = comp::increasing<typename std::decay<Pointer>::type>);
+template<typename Pointer, typename FuncType = bool(*)(const typename Pointer::value_type&, const typename Pointer::value_type&)>
+void mySort(Pointer start, Pointer end, FuncType compFunc = comp::increasing<typename Pointer::value_type>);
+
+template<typename T, typename FuncType = bool(*)(const T&, const T&)>
+void mySort(T* start, T* end, FuncType compFunc = comp::increasing<T>);
 
 template<typename T, typename FuncType = bool(*)(const T&, const T&)>
 void mySort(T A[], int size, FuncType compFunc = comp::increasing<T>);

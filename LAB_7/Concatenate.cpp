@@ -18,10 +18,6 @@ void computeLargestNum(string numbers[], int size){
 }
 
 int main(){
-    int x[4] = {4,3,2,1};
-    mySort(x, x + 4);
-    for(int i = 0; i < 4; i++) cout << x[i] << " ";
-    cout << endl;
     int t,n;
     cin >> t;
     while(t--){
