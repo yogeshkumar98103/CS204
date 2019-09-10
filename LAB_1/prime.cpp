@@ -231,7 +231,7 @@ vector<char> subtract(vector<char> num1, vector<char> num2){
 
 // This funcion return remainder num1 % num2
 vector<char> remainder(vector<char> num1, vector<char> num2){
-    vector<char> remainder = {'0'};
+    vector<char> quotient;
 
     SizeType s1 = num1.size();
     SizeType s2 = num2.size();
@@ -242,35 +242,27 @@ vector<char> remainder(vector<char> num1, vector<char> num2){
 
     SizeType i = 0;
     SizeType j = s2;
-    bool pushZero = false;
-    vector<char> part;
-    remainder = getPart(num1, i, j);
+    
+    vector<char> part = getPart(num1, 0, j);
 
-    while(true){
-        part = remainder;
-        
-        while(j < s1 && compare(part, num2) == -1){
-            part.push_back(num1[j++]);
-        }
-
-        if(j >= s1 && compare(part, num2) == -1) break;
-
+    while(j <= s1){
         // Repeated addition till we cross `part`
-        vector<char> sumTillNow = {'0'};
-        int digit = 0;
-        int compResult = -1;
-        while(compResult == -1){
+        vector<char> sumTillNow(num2.begin(), num2.end());
+        int digit = 1;
+        while(compare(sumTillNow, part) == -1){
             sumTillNow = add(sumTillNow, num2);
             digit++;
-            compResult = compare(sumTillNow, part);
         }
-        if(compResult == 1){
+        if(compare(sumTillNow, part) == 1){
             sumTillNow = subtract(sumTillNow, num2);
             digit--;
         }
-        remainder = subtract(part, sumTillNow);
+
+        part = subtract(part, sumTillNow);
+        quotient.push_back(digit + '0');
+        part.push_back(num1[j++]);
     }
-    return remainder;
+    return part;
 }
 
 // This function approximates the square root of given vector
@@ -334,7 +326,6 @@ vector<char> approximateSquareRoot(vector<char> num){
     return approxSqrt;
 }
 
-
 // =======================================================
 //                  Check Prime Function
 // =======================================================
@@ -374,7 +365,7 @@ int main(){
             cout << "Prime" << endl;
         }
         else{
-            cout << "Not a prime" << endl;
+            cout << "Not a Prime" << endl;
         }
     }
 

@@ -3,15 +3,17 @@
 
 using namespace std;
 
+bool compareFunc(string& num1, string& num2){
+    string str1 = num1.append(num2);
+    string str2 = num2.append(num1);
+    return (str1.compare(str2) > 0);
+}
+
 void computeLargestNum(string numbers[], int size){
-    sort(numbers, size, [](string& num1, string& num2)->bool{
-        string str1 = num1.append(num2);
-        string str2 = num2.append(num1);
-        return (str1.compare(str2) > 0);
-    });
+    mySort(numbers, size, compareFunc);
 
     for(int i = 0; i < size; i++){
-        cout << numbers[i];
+        cout << numbers[i] << endl;
     }
     cout << endl;
 }
@@ -25,7 +27,7 @@ int main(){
         for(int i = 0; i < n; i++){
             cin >> numbers[i];
         }
-
+        cout << " EEEEE" << endl;
         computeLargestNum(numbers, n);
     }
     return 0;
