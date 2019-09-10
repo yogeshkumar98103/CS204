@@ -40,13 +40,16 @@ private:
     static void Swap(Pointer x, Pointer y);
 };
 
-template<typename T, typename FuncType>
+template<typename T, typename FuncType = bool(*)(const T&, const T&)>
 void mySort(std::vector<T>& Arr, FuncType compFunc = comp::increasing<T>);
 
-template<typename Pointer, typename FuncType>
-void mySort(Pointer start, Pointer end, FuncType compFunc = comp::increasingPtr<Pointer>);
+template<typename Pointer, typename FuncType = bool(*)(const typename Pointer::value_type&, const typename Pointer::value_type&)>
+void mySort(Pointer start, Pointer end, FuncType compFunc = comp::increasing<typename Pointer::value_type>);
 
-template<typename T, typename FuncType>
+template<typename T, typename FuncType = bool(*)(const T&, const T&)>
+void mySort(T* start, T* end, FuncType compFunc = comp::increasing<T>);
+
+template<typename T, typename FuncType = bool(*)(const T&, const T&)>
 void mySort(T A[], int size, FuncType compFunc = comp::increasing<T>);
 
 #include "Sort.cpp"

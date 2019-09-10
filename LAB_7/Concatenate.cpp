@@ -3,14 +3,13 @@
 
 using namespace std;
 
-bool compareFunc(string& num1, string& num2){
-    string str1 = num1.append(num2);
-    string str2 = num2.append(num1);
-    return (str1.compare(str2) > 0);
-}
 
 void computeLargestNum(string numbers[], int size){
-    mySort(numbers, size, compareFunc);
+    mySort(numbers, size, [](string& num1, string& num2)->bool{
+        string str1 = num1 + num2;
+        string str2 = num2 + num1;
+        return (str1.compare(str2) > 0);
+    });
 
     for(int i = 0; i < size; i++){
         cout << numbers[i] << endl;
