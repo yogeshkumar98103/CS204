@@ -12,7 +12,7 @@ void computeLargestNum(string numbers[], int size){
     });
 
     for(int i = 0; i < size; i++){
-        cout << numbers[i];
+        cout << numbers[i] << endl;
     }
     cout << endl;
 }
@@ -26,7 +26,7 @@ int main(){
         for(int i = 0; i < n; i++){
             cin >> numbers[i];
         }
-
+        cout << " EEEEE" << endl;
         computeLargestNum(numbers, n);
     }
     return 0;
