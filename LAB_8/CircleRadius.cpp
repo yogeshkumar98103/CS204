@@ -6,7 +6,7 @@ void insertionSort(T* A, int size){
     for(int i = 1; i < size; i++){
         int j = i - 1;
         T temp = A[i];
-        while( j >= 0 && A[j] > A[i]){
+        while( j >= 0 && A[j] > temp){
             A[j + 1] = A[j];
             j--;
         }
@@ -50,13 +50,13 @@ T partition(T* A, int size, T pivot){
 
 template <typename T>
 T kthSmallest(T *A, int size, int k){
-    if(size <= 71){
+    if(size <= R){
         insertionSort(A, size);
-        int mid = size/2;
+        int mid = (size - 1)/2;
         return A[mid];
-    }    
+    }
 
-    int groupCount = (size + K - 1)/k;
+    int groupCount = (size + K - 1)/K;
     int lastGroupSize = size - K*(groupCount - 1);
     T medians[groupCount];
 
@@ -66,20 +66,19 @@ T kthSmallest(T *A, int size, int k){
     }
     insertionSort(A + K*i, lastGroupSize);
 
-    
+
     for(i = 0; i < groupCount - 1; i++){
-        medians[i] = A[i*K + K/2];
+        medians[i] = A[i*K + (K-1)/2];
     }
-    medians[groupCount - 1] = A[K*i + lastGroupSize/2];
+    medians[groupCount - 1] = A[K*i + (lastGroupSize - 1)/2];
 
-    T median_of_medians =  kthSmallest(medians, groupCount, groupCount/2);
+    T median_of_medians =  kthSmallest(medians, groupCount, (groupCount + 1)/2);
     int pivotIndex = partition(A, size, median_of_medians);
-    int mid = size/2;
 
-    if (pivotIndex == mid-1) 
-        return A[pivotIndex]; 
-    if (pivotIndex > mid-1) 
-        return kthSmallest(A, pivotIndex, k); 
+    if (pivotIndex == k-1)
+        return A[pivotIndex];
+    if (pivotIndex > k-1)
+        return kthSmallest(A, pivotIndex, k);
 
     return kthSmallest(A + pivotIndex + 1, size - pivotIndex - 1, k - pivotIndex - 1);
 }
@@ -87,8 +86,10 @@ T kthSmallest(T *A, int size, int k){
 
 
 int main(){
-    int distances[10] = {2,4,5,1,3,7,6,9,8,0};
-    int minRadius = kthSmallest(distances, 10, 5);
+    int distances[] = {2,4,5,1,3,7,6,9,8};
+    int size = sizeof(distances)/ sizeof(distances[0]);
+    int* ptr = distances;
+    int minRadius = kthSmallest(ptr, size, (size+1)/2);
     cout << minRadius << endl;
     return 0;
     int t, k, x, y;
