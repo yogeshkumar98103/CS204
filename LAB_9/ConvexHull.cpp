@@ -1,3 +1,7 @@
+//
+// Created by Yogesh Kumar on 2019-10-03.
+//
+
 #include <iostream>
 #include <algorithm>
 #include <stack>
@@ -16,20 +20,20 @@ enum Orientation{
 };
 
 Orientation orientation(Point p1, Point p2, Point p3){
-    long long res = (p2.x - p1.x)*(p3.y - p1.y) - (p3.x - p1.x)*(p2.y - p1.y);
+    long long res = (p2.y - p1.y)*(p3.x - p2.x) - (p2.x - p1.x)*(p3.y - p2.y);
     if(res == 0) return Collinear;
-    if(res > 0) RightRotation;
+    if(res > 0) return RightRotation;
     return LeftRotation;
 }
 
 long long dist(Point p1, Point p2){
-    return (long long)(p1.x - p2.x)*(p1.x - p2.x) - (long long)(p1.y - p2.y)*(p1.y - p2.y);
+    return (long long)(p1.x - p2.x)*(p1.x - p2.x) + (long long)(p1.y - p2.y)*(p1.y - p2.y);
 }
 
 // Comparison Class
 class SortFunc{
     Point pRef;
-  public:
+public:
     SortFunc(Point pRef){
         this->pRef = pRef;
     }
@@ -52,16 +56,14 @@ Point nextToTop(stack<Point>& s){
 }
 
 vector<Point> findConvexHull(vector<Point> points){
-    // Find Bottommost Point
-    Point bottomPoint = points[0];
+    // Find Min X Point
     int min = 0;
 
     int x,y;
     for(int i = 1; i < points.size(); i++){
         x = points[i].x;
         y = points[i].y;
-        if(y < bottomPoint.y || (y == bottomPoint.y && x < bottomPoint.x)){
-            bottomPoint = points[i];
+        if(x < points[min].x || (x == points[min].x && y < points[min].y)){
             min = i;
         }
     }
@@ -73,9 +75,9 @@ vector<Point> findConvexHull(vector<Point> points){
 
     // Delete all collinear points
     int m = 1;
-    for(int i = 2; i < points.size(); i++){
-        while(i < points.size() && orientation(points[m], points[m+1], points[i]) == Collinear)
-            i++; 
+    for(int i = 1; i < points.size(); i++){
+        while(i < points.size() - 1 && orientation(points[0], points[i], points[i+1]) == Collinear)
+            i++;
         points[m] = points[i];
         m++;
     }
@@ -100,17 +102,18 @@ vector<Point> findConvexHull(vector<Point> points){
         convexHull.push_back(s.top());
         s.pop();
     }
+    rotate(convexHull.begin(), convexHull.begin() + convexHull.size() -1, convexHull.end());
     return convexHull;
 }
 
 int main(){
     // Input
-    vector<Point> points =  {{0, 3}, {1, 1}, {2, 2}, {4, 4}, {0, 0}, {1, 2}, {3, 1}, {3, 3}};
-    // int n;
-    // cin >> n;
-    // for(int i = 0; i < n; i++){
-    //     cin >> points[i].x >> points[i].y;
-    // }
+    int n;
+    cin >> n;
+    vector<Point> points(n);
+    for(int i = 0; i < n; i++){
+        cin >> points[i].x >> points[i].y;
+    }
 
     // Find ConvexHull
     vector<Point> convexHull = findConvexHull(points);
