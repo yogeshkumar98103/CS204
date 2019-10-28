@@ -47,15 +47,23 @@ int main(){
     int vertexCount, edgeCount;
     cin >> vertexCount >> edgeCount;
     AdjList_t adjList(vertexCount);
-    int u, v, w;
+    int u, v, w, dummyIndex = v;
     bool parity;
     for(int i = 0; i < edgeCount; i++){
         cin >> u >> v >> w;
         u--;
         v--;
-        parity = (w%2 == 0);
-        adjList[v].push_back({u,parity});
-        adjList[u].push_back({v,parity});
+        if(w%2 == 0){
+            adjList.push_back(vector<int>());
+            adjList[v].push_back(dummyIndex);
+            adjList[u].push_back(dummyIndex);
+            adjList[dummyIndex].push_back(v);
+            adjList[dummyIndex].push_back(u);
+        }
+        else{
+            adjList[v].push_back(u);
+            adjList[u].push_back(v);
+        }
     }
 
     if(checkBipartite(adjList, vertexCount)){
