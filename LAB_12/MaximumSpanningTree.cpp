@@ -61,8 +61,7 @@ long long int find_maximum_spanning_tree(vector<Edge>& edges, int vertex_count){
 	for(const Edge& e: edges){
 		if(ds.find_set(e.from) != ds.find_set(e.to)){
 			ds.union_sets(e.from, e.to);
-			ans *= e.weight;
-            ans %= MOD;
+			ans = (ans * e.weight + MOD) % MOD;
 		}
 	}
     return ans;
@@ -77,6 +76,7 @@ int main(){
 	long long int w;
 	for (int i = 0; i < edge_count; ++i){
 		cin >> u >> v >> w;
+        w = (w + MOD) % MOD;
 		edges.push_back({u,v,w});
 	}
 
