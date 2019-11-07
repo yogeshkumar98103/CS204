@@ -17,45 +17,11 @@
 					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="Bipartite">
-				<Option output="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Bipartite" prefix_auto="0" extension_auto="0"/>
+			<Target title="edit_cache">
 				<Option working_dir="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
-					<Add directory="/usr/local/include"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/include"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
-					<Add directory="/usr/include"/>
-					<Add directory="/System/Library/Frameworks"/>
-					<Add directory="/Library/Frameworks"/>
-				</Compiler>
+				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 Bipartite"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="Bipartite/fast">
-				<Option output="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Bipartite" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
-					<Add directory="/usr/local/include"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/include"/>
-					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
-					<Add directory="/usr/include"/>
-					<Add directory="/System/Library/Frameworks"/>
-					<Add directory="/Library/Frameworks"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 Bipartite/fast"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
@@ -115,6 +81,94 @@
 					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="MaximumSpanningTree">
+				<Option output="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/MaximumSpanningTree" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 MaximumSpanningTree"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="MaximumSpanningTree/fast">
+				<Option output="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/MaximumSpanningTree" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 MaximumSpanningTree/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Bipartite">
+				<Option output="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Bipartite" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 Bipartite"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Bipartite/fast">
+				<Option output="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Bipartite" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 Bipartite/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="Recharge">
 				<Option output="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Recharge" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug"/>
@@ -154,16 +208,6 @@
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 Recharge/fast"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="edit_cache">
-				<Option working_dir="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
 					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
@@ -216,6 +260,9 @@
 		</Build>
 		<Unit filename="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_11/Bipartite.cpp">
 			<Option target="Bipartite"/>
+		</Unit>
+		<Unit filename="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_12/MaximumSpanningTree.cpp">
+			<Option target="MaximumSpanningTree"/>
 		</Unit>
 		<Unit filename="/Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB/LAB_4 and LAB_5/ExpressionTree.cpp">
 			<Option target="ExpressionTree"/>
