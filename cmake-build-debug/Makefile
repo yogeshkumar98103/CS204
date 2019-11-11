@@ -56,17 +56,6 @@ CMAKE_BINARY_DIR = /Users/yogeshkumar98103/Documents/Programming/C++/DS_ALGO_LAB
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
-
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
-
-.PHONY : rebuild_cache/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -77,6 +66,17 @@ edit_cache:
 edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
+
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -124,6 +124,32 @@ RechargeWithAVLTree/fast:
 .PHONY : RechargeWithAVLTree/fast
 
 #=============================================================================
+# Target rules for targets named MaximumSpanningTree
+
+# Build rule for target.
+MaximumSpanningTree: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 MaximumSpanningTree
+.PHONY : MaximumSpanningTree
+
+# fast build rule for target.
+MaximumSpanningTree/fast:
+	$(MAKE) -f CMakeFiles/MaximumSpanningTree.dir/build.make CMakeFiles/MaximumSpanningTree.dir/build
+.PHONY : MaximumSpanningTree/fast
+
+#=============================================================================
+# Target rules for targets named Bipartite
+
+# Build rule for target.
+Bipartite: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Bipartite
+.PHONY : Bipartite
+
+# fast build rule for target.
+Bipartite/fast:
+	$(MAKE) -f CMakeFiles/Bipartite.dir/build.make CMakeFiles/Bipartite.dir/build
+.PHONY : Bipartite/fast
+
+#=============================================================================
 # Target rules for targets named Recharge
 
 # Build rule for target.
@@ -148,6 +174,60 @@ ExpressionTree: cmake_check_build_system
 ExpressionTree/fast:
 	$(MAKE) -f CMakeFiles/ExpressionTree.dir/build.make CMakeFiles/ExpressionTree.dir/build
 .PHONY : ExpressionTree/fast
+
+LAB_11/Bipartite.o: LAB_11/Bipartite.cpp.o
+
+.PHONY : LAB_11/Bipartite.o
+
+# target to build an object file
+LAB_11/Bipartite.cpp.o:
+	$(MAKE) -f CMakeFiles/Bipartite.dir/build.make CMakeFiles/Bipartite.dir/LAB_11/Bipartite.cpp.o
+.PHONY : LAB_11/Bipartite.cpp.o
+
+LAB_11/Bipartite.i: LAB_11/Bipartite.cpp.i
+
+.PHONY : LAB_11/Bipartite.i
+
+# target to preprocess a source file
+LAB_11/Bipartite.cpp.i:
+	$(MAKE) -f CMakeFiles/Bipartite.dir/build.make CMakeFiles/Bipartite.dir/LAB_11/Bipartite.cpp.i
+.PHONY : LAB_11/Bipartite.cpp.i
+
+LAB_11/Bipartite.s: LAB_11/Bipartite.cpp.s
+
+.PHONY : LAB_11/Bipartite.s
+
+# target to generate assembly for a file
+LAB_11/Bipartite.cpp.s:
+	$(MAKE) -f CMakeFiles/Bipartite.dir/build.make CMakeFiles/Bipartite.dir/LAB_11/Bipartite.cpp.s
+.PHONY : LAB_11/Bipartite.cpp.s
+
+LAB_12/MaximumSpanningTree.o: LAB_12/MaximumSpanningTree.cpp.o
+
+.PHONY : LAB_12/MaximumSpanningTree.o
+
+# target to build an object file
+LAB_12/MaximumSpanningTree.cpp.o:
+	$(MAKE) -f CMakeFiles/MaximumSpanningTree.dir/build.make CMakeFiles/MaximumSpanningTree.dir/LAB_12/MaximumSpanningTree.cpp.o
+.PHONY : LAB_12/MaximumSpanningTree.cpp.o
+
+LAB_12/MaximumSpanningTree.i: LAB_12/MaximumSpanningTree.cpp.i
+
+.PHONY : LAB_12/MaximumSpanningTree.i
+
+# target to preprocess a source file
+LAB_12/MaximumSpanningTree.cpp.i:
+	$(MAKE) -f CMakeFiles/MaximumSpanningTree.dir/build.make CMakeFiles/MaximumSpanningTree.dir/LAB_12/MaximumSpanningTree.cpp.i
+.PHONY : LAB_12/MaximumSpanningTree.cpp.i
+
+LAB_12/MaximumSpanningTree.s: LAB_12/MaximumSpanningTree.cpp.s
+
+.PHONY : LAB_12/MaximumSpanningTree.s
+
+# target to generate assembly for a file
+LAB_12/MaximumSpanningTree.cpp.s:
+	$(MAKE) -f CMakeFiles/MaximumSpanningTree.dir/build.make CMakeFiles/MaximumSpanningTree.dir/LAB_12/MaximumSpanningTree.cpp.s
+.PHONY : LAB_12/MaximumSpanningTree.cpp.s
 
 LAB_4_and_LAB_5/ExpressionTree.o: LAB_4_and_LAB_5/ExpressionTree.cpp.o
 
@@ -236,11 +316,19 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... RechargeWithAVLTree"
-	@echo "... Recharge"
-	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... rebuild_cache"
+	@echo "... RechargeWithAVLTree"
+	@echo "... MaximumSpanningTree"
+	@echo "... Bipartite"
+	@echo "... Recharge"
 	@echo "... ExpressionTree"
+	@echo "... LAB_11/Bipartite.o"
+	@echo "... LAB_11/Bipartite.i"
+	@echo "... LAB_11/Bipartite.s"
+	@echo "... LAB_12/MaximumSpanningTree.o"
+	@echo "... LAB_12/MaximumSpanningTree.i"
+	@echo "... LAB_12/MaximumSpanningTree.s"
 	@echo "... LAB_4_and_LAB_5/ExpressionTree.o"
 	@echo "... LAB_4_and_LAB_5/ExpressionTree.i"
 	@echo "... LAB_4_and_LAB_5/ExpressionTree.s"

@@ -18,8 +18,9 @@ bool bfs(const AdjList_t& adjList, vector<bool>& visited, vector<bool>& color, i
         q.pop();
 
         if(current == -1){
-            if(q.size() > 1) q.push(-1);
+            if(!q.empty()) q.push(-1);
             c = !c;
+            continue;
         }
 
         for(int to: adjList[current]){
@@ -47,7 +48,7 @@ int main(){
     int vertexCount, edgeCount;
     cin >> vertexCount >> edgeCount;
     AdjList_t adjList(vertexCount);
-    int u, v, w, dummyIndex = v;
+    int u, v, w, dummyIndex = vertexCount;
     bool parity;
     for(int i = 0; i < edgeCount; i++){
         cin >> u >> v >> w;
@@ -68,7 +69,7 @@ int main(){
     }
 
     if(checkBipartite(adjList, vertexCount)){
-        cout << "NO" << endl;
+        cout << "No" << endl;
     }
     else{
         cout << "YES" << endl;
@@ -80,16 +81,11 @@ int main(){
 
 /*
 
-9 10
-1 2
-1 7
-1 4
-9 2
-6 8
-6 7
-3 7
-3 5
-3 4
-8 2
+5 5
+1 2 1
+2 3 2
+3 4 3
+4 5 4
+5 1 5
 
  */

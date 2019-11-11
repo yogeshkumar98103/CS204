@@ -18,8 +18,9 @@ bool bfs(const AdjList_t& adjList, vector<bool>& visited, vector<bool>& color, i
         q.pop();
 
         if(current == -1){
-            if(q.size() > 1) q.push(-1);
+            if(!q.empty()) q.push(-1);
             c = !c;
+            continue;
         }
 
         for(int to: adjList[current]){

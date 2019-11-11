@@ -51,6 +51,8 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/RechargeWithAVLTree.dir/DependInfo.cmake"
+  "CMakeFiles/MaximumSpanningTree.dir/DependInfo.cmake"
+  "CMakeFiles/Bipartite.dir/DependInfo.cmake"
   "CMakeFiles/Recharge.dir/DependInfo.cmake"
   "CMakeFiles/ExpressionTree.dir/DependInfo.cmake"
   )
