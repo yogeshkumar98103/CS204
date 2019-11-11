@@ -59,6 +59,7 @@ int main(){
             adjList[u].push_back(dummyIndex);
             adjList[dummyIndex].push_back(v);
             adjList[dummyIndex].push_back(u);
+            dummyIndex++;
         }
         else{
             adjList[v].push_back(u);
@@ -67,10 +68,10 @@ int main(){
     }
 
     if(checkBipartite(adjList, vertexCount)){
-        cout << "YES" << endl;
+        cout << "NO" << endl;
     }
     else{
-        cout << "NO" << endl;
+        cout << "YES" << endl;
     }
 
     return 0;

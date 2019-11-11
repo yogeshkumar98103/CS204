@@ -51,7 +51,6 @@ long long findLargestBlockSize(int m, int n, BlockMatricType& blocks){
     return result;
 }
 
-
 int main(){
     int m, n, c;
 
